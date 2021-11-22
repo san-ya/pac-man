@@ -1,0 +1,18 @@
+body{
+    background-color: black;
+}
+.grid-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.grid{
+    width: 38vw;
+    height: 38vw;
+    border: 2px solid #fff;
+    margin: auto;
+}
+.wall{
+    background-color: blue;
+}

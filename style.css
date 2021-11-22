@@ -6,7 +6,7 @@ font-family: 'Chakra Petch', sans-serif; */
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
+    height: 90vh;
 }
 *{
     color: white;
@@ -36,6 +36,9 @@ h1 span:nth-child(5){
 h1 span:nth-child(6){
     color: #FFB8FF;
 }
+.pacman-gif{
+    height: 5rem;
+}
 #start-game{
     width: 20vw;
     height: 5vw;
@@ -43,30 +46,12 @@ h1 span:nth-child(6){
     border-radius: .5vw;
     border: none;
     font-size: 2.5rem;
-    background-color: #6930C3;
+    background-image: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
 }
 #start-game:hover{
-    box-shadow: 0px 0px 20px #6F69AC;
+    box-shadow: 0 0.5rem 0.5rem 0.2rem rgba(255, 105, 135, .3);
     cursor: pointer;
 }
 body{
     background-color: black;
-}
-.grid-wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-.grid{
-    width: 38vw;
-    height: 38vw;
-    border: 2px solid #fff;
-    margin: auto;
-}
-.wall{
-    background-color: blue;
-}
-.path{
-    
 }

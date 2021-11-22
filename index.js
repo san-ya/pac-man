@@ -1,11 +1,9 @@
-let grid = document.querySelector(".grid");
-// let pacmanHead = document.querySelectorAll("h1").children;
-// let pacmanChild = pacmanHead.children;
 let pacmanHead = document.getElementsByClassName("pacman-head");
-
-//color
+const startGameAudio = new Audio('./sounds/game_start.wav');
+//colors array
 const colors = ["cyan", "#FFB8FF", "#FFB852", "red"];
 
+//change color of heading
 setInterval(function changeHeadColor() {
   var i;
   for (i = 0; i < pacmanHead.length; i++) {
@@ -14,6 +12,9 @@ setInterval(function changeHeadColor() {
     let pacSpan = pacmanHead[i];
     pacSpan.style.color = randomColor;
   }
-},
-100
-);
+}, 100);
+
+window.onload = function (){
+  startGameAudio.play();
+  // startGameAudio.loop = true;
+}
