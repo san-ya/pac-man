@@ -32,7 +32,7 @@ const easy = [
     1,0,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,
     1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,
     1,0,1,0,1,0,1,1,1,0,1,1,1,0,1,0,1,0,1,
-    1,0,1,0,0,0,1,3,0,0,0,3,1,0,0,0,1,0,1,
+    1,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,1,
     1,0,1,0,1,0,1,1,1,0,1,1,1,0,1,0,1,0,1,
     1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,
     1,0,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,
@@ -79,12 +79,20 @@ const hard = [
 ];
 const temp = [];
 makeGrid(19 * 19);
-
-function createPowerPill(){
-    for()
-}
-
 function makeGrid(noc) {
+    for(i = 0; i<4; i++)
+    {
+        let randNum = Math.floor(Math.random() * easy.length);
+        console.log(randNum);
+        if(easy[randNum] === PATH)
+        {
+            easy[randNum] = POWERPILL;
+        }
+        else
+        {
+            i--;
+        }
+    }
   for (i = 0; i < noc; i++) {
     let newCell = document.createElement("div");
     grid.appendChild(newCell).className = "cell";
