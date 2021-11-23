@@ -1,7 +1,26 @@
 let grid = document.querySelector(".grid");
-// PATH -> 0
-// WALL -> 1
-// GHOST'S HOME -> 2
+
+const gridSize = [
+  {
+    level: "easy",
+    gridRow: 19,
+    gridCol: 19,
+  },
+  {
+    level: "medium",
+    grid: 19,
+  },
+  {
+    level: "hard",
+    gridRow: 28,
+    gridCol: 31,
+  },
+];
+
+let PATH = 0;
+let WALL = 1;
+let GHOSTHOME = 2;
+let POWERPILL = 3;
 
 const easy = [
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -13,7 +32,7 @@ const easy = [
     1,0,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,
     1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,
     1,0,1,0,1,0,1,1,1,0,1,1,1,0,1,0,1,0,1,
-    1,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,1,
+    1,0,1,0,0,0,1,3,0,0,0,3,1,0,0,0,1,0,1,
     1,0,1,0,1,0,1,1,1,0,1,1,1,0,1,0,1,0,1,
     1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,
     1,0,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,
@@ -25,7 +44,7 @@ const easy = [
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 ];
 
-const difficult = [
+const hard = [
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
     1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
@@ -58,29 +77,28 @@ const difficult = [
     1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 ];
+const temp = [];
+makeGrid(19 * 19);
 
-let rows = 19;
-let cells = 19;
-
-function defaultGrid() {
-    makeRows(16);
-    makeColumns(16);
+function createPowerPill(){
+    for()
 }
 
-function makeRows(rowNum) {
+function makeGrid(noc) {
+  for (i = 0; i < noc; i++) {
+    let newCell = document.createElement("div");
+    grid.appendChild(newCell).className = "cell";
+    temp.push(newCell);
 
-    for (r = 0; r < rowNum; r++) {
-        let row = document.createElement("div");
-        grid.appendChild(row).className = "gridRow";
-    };
-};
-
-function makeColumns(cellNum) {
-    for (i = 0; i < rows.length; i++) {
-        for (j = 0; j < cellNum; j++) {
-            let newCell = document.createElement("div");
-            rows[j].appendChild(newCell).className = "cell";
-        };
-
-    };
-};
+    if (easy[i] === WALL) temp[i].classList.add("wall");
+    else if (easy[i] === PATH) {
+      let pacDot = document.createElement("div");
+      newCell.appendChild(pacDot).className = "pac-dot";
+    }
+    else if(easy[i] === POWERPILL)
+    {
+    let pacPill = document.createElement("div");
+      newCell.appendChild(pacPill).className = "power-pill";
+    }
+  }
+}
