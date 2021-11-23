@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Chakra+Petch:wght@700&display=swap');
-/* font-family: 'Audiowide', cursive;
-font-family: 'Chakra Petch', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .game-main-container{
     display: flex;
     flex-direction: column;
@@ -10,12 +9,11 @@ font-family: 'Chakra Petch', sans-serif; */
 }
 *{
     color: white;
-    font-family: 'Audiowide', 'cursive';
+    font-family: 'Press Start 2P', cursive;
 }
 h1{
     text-align: center;
-    font-size: 8rem;
-    /* font-weight: bold; */
+    font-size: 5rem;
     margin: 0;
 }
 h1 span:nth-child(1){
@@ -45,7 +43,7 @@ h1 span:nth-child(6){
     text-transform: uppercase;
     border-radius: .5vw;
     border: none;
-    font-size: 2.5rem;
+    font-size: 2rem;
     background-image: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
 }
 #start-game:hover{
