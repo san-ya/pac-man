@@ -5,18 +5,35 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
 }
 .grid{
     width: 38vw;
     height: 38vw;
-    border: 2px solid #fff;
-    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    /* border: 2px solid #fff; */
+    /* border-radius: .5vw; */
 }
-.gridCell {
+.cell {
     width: 2vw;
     height: 2vw;
+    justify-content: center;
+    display: inline-flex;
+    align-items: center;
 }
 .wall{
     background-color: blue;
+}
+.pac-dot{
+    width: .5vw;
+    height: .5vw;
+    background-color: rgb(243, 243, 152);
+    border-radius: 50%;
+}
+.power-pill{
+    width: 1vw;
+    height: 1vw;
+    background-color: rgb(253, 168, 182);
+    border-radius: 50%;
 }
