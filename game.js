@@ -144,11 +144,13 @@ function movePacman(event){
 
   if(easy[nextStep] === PATH)
   { 
-    if(gridLayout[nextStep].children)
-    {score += 10;
-    scoreSpan.innerText = score;
+    if(gridLayout[pacmanStart].children.contains('.pac-dot'))
+    {
+      score += 10;
+      scoreSpan.innerText = score;
+    }
     let currentCell = gridLayout[pacmanStart];
-    currentCell.removeChild(currentCell.childNodes[0]);}
+    currentCell.removeChild(currentCell.childNodes[0]);
     pacmanStart = nextStep;
     gridLayout[pacmanStart].classList.add('pacman');
   }
