@@ -84,6 +84,7 @@ const gridLayout = [];
 
 makeGrid(19 * 19);
 function makeGrid(noc) {
+  //create random power pellets
     for(i = 0; i<4; i++)
     {
         let randNum = Math.floor(Math.random() * easy.length);
@@ -96,6 +97,7 @@ function makeGrid(noc) {
             i--;
         }
     }
+
   for (i = 0; i < noc; i++) {
     let newCell = document.createElement("div");
     grid.appendChild(newCell).className = "cell";
@@ -142,17 +144,20 @@ function movePacman(event){
       break
   }
 
-  if(easy[nextStep] === PATH)
+  if(easy[nextStep] === PATH || easy[nextStep] ===POWERPILL)
   { 
-    if(gridLayout[pacmanStart].children.contains('.pac-dot'))
+    if(gridLayout[pacmanStart].children.length>=1)
     {
-      score += 10;
+      if(easy[nextStep] === PATH)
+        score += 10;
+      else
+        score+=50;
       scoreSpan.innerText = score;
+      let currentCell = gridLayout[pacmanStart];
+      currentCell.removeChild(currentCell.childNodes[0])
     }
-    let currentCell = gridLayout[pacmanStart];
-    currentCell.removeChild(currentCell.childNodes[0]);
     pacmanStart = nextStep;
-    gridLayout[pacmanStart].classList.add('pacman');
+    gridLayout[nextStep].classList.add('pacman'); 
   }
   else if(easy[nextStep] === WALL)
   gridLayout[pacmanStart].classList.add('pacman')
