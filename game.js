@@ -83,15 +83,11 @@ const gridLayout = [];
 
 makeGrid(19 * 19);
 function makeGrid(noc) {
-    for(i = 0; i<4; i++)
-    {
+    for(i = 0; i<4; i++) {
         let randNum = Math.floor(Math.random() * easy.length);
-        if(easy[randNum] === PATH)
-        {
+        if(easy[randNum] === PATH) {
             easy[randNum] = POWERPILL;
-        }
-        else
-        {
+        } else {
             i--;
         }
     }
@@ -104,10 +100,8 @@ function makeGrid(noc) {
     else if (easy[i] === PATH) {
       let pacDot = document.createElement("div");
       newCell.appendChild(pacDot).className = "pac-dot";
-    }
-    else if(easy[i] === POWERPILL)
-    {
-    let pacPill = document.createElement("div");
+    } else if(easy[i] === POWERPILL) {
+      let pacPill = document.createElement("div");
       newCell.appendChild(pacPill).className = "power-pill";
     }
   }
@@ -117,7 +111,7 @@ let pacmanStart = 256;
 // gridLayout[pacmanStart].classList.remove('power-pill')
 gridLayout[pacmanStart].classList.add('pacman')
 
-function movePacman(event){
+function movePacman(event) {
   gridLayout[pacmanStart].classList.remove('pacman')
   // 37 = left
   // 39 = right
@@ -125,9 +119,9 @@ function movePacman(event){
   // 38 = up
   let nextStep
   
-  switch(event.keyCode){
+  switch(event.keyCode) {
     case 37:
-      nextStep = pacmanStart-1;
+      nextStep = pacmanStart - 1;
       break
     case 39:
       nextStep = pacmanStart + 1;
@@ -140,11 +134,10 @@ function movePacman(event){
       break
   }
 
-  if(easy[nextStep] === PATH)
-  { pacmanStart = nextStep;
+  if(easy[nextStep] === PATH) {
+    pacmanStart = nextStep;
     gridLayout[nextStep].classList.add('pacman')
-  }
-  else if(easy[nextStep] === WALL)
-  gridLayout[pacmanStart].classList.add('pacman')
+  } else if(easy[nextStep] === WALL)
+      gridLayout[pacmanStart].classList.add('pacman')
 }
 document.addEventListener('keyup', movePacman)
