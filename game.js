@@ -77,13 +77,15 @@ const hard = [
     1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 ];
-const temp = [];
+
+
+const gridLayout = [];
+
 makeGrid(19 * 19);
 function makeGrid(noc) {
     for(i = 0; i<4; i++)
     {
         let randNum = Math.floor(Math.random() * easy.length);
-        console.log(randNum);
         if(easy[randNum] === PATH)
         {
             easy[randNum] = POWERPILL;
@@ -96,9 +98,9 @@ function makeGrid(noc) {
   for (i = 0; i < noc; i++) {
     let newCell = document.createElement("div");
     grid.appendChild(newCell).className = "cell";
-    temp.push(newCell);
+    gridLayout.push(newCell);
 
-    if (easy[i] === WALL) temp[i].classList.add("wall");
+    if (easy[i] === WALL) gridLayout[i].classList.add("wall");
     else if (easy[i] === PATH) {
       let pacDot = document.createElement("div");
       newCell.appendChild(pacDot).className = "pac-dot";
@@ -110,3 +112,39 @@ function makeGrid(noc) {
     }
   }
 }
+
+let pacmanStart = 256;
+// gridLayout[pacmanStart].classList.remove('power-pill')
+gridLayout[pacmanStart].classList.add('pacman')
+
+function movePacman(event){
+  gridLayout[pacmanStart].classList.remove('pacman')
+  // 37 = left
+  // 39 = right
+  // 40 = down
+  // 38 = up
+  let nextStep
+  
+  switch(event.keyCode){
+    case 37:
+      nextStep = pacmanStart-1;
+      break
+    case 39:
+      nextStep = pacmanStart + 1;
+      break
+    case 38:
+      nextStep = pacmanStart - 19;
+      break
+    case 40:
+      nextStep = pacmanStart + 19;
+      break
+  }
+
+  if(easy[nextStep] === PATH)
+  { pacmanStart = nextStep;
+    gridLayout[nextStep].classList.add('pacman')
+  }
+  else if(easy[nextStep] === WALL)
+  gridLayout[pacmanStart].classList.add('pacman')
+}
+document.addEventListener('keyup', movePacman)
