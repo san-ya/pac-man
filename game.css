@@ -29,10 +29,23 @@ body{
     /* border: 1px solid blue;
     box-sizing: border-box; */
 }
+.pac-remove{
+    width: .5vw;
+    height: .5vw;
+    background-color: black;
+    border-radius: 50%;
+
+}
 .pac-dot{
     width: .5vw;
     height: .5vw;
     background-color: rgb(243, 243, 152);
+    border-radius: 50%;
+}
+.pac{
+    width: .5vw;
+    height: .5vw;
+    background-color: black;
     border-radius: 50%;
 }
 .power-pill{

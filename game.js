@@ -140,9 +140,11 @@ function movePacman(event){
       break
   }
 
-  if(easy[nextStep] === PATH)
-  { pacmanStart = nextStep;
-    gridLayout[nextStep].classList.add('pacman')
+  if(easy[nextStep] === PATH || easy[nextStep]=== POWERPILL)
+  { 
+    console.log(gridLayout[pacmanStart].children);
+    pacmanStart = nextStep;
+    gridLayout[nextStep].classList.add('pacman');
   }
   else if(easy[nextStep] === WALL)
   gridLayout[pacmanStart].classList.add('pacman')
