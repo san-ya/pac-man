@@ -1,4 +1,5 @@
 let grid = document.querySelector(".grid");
+let scoreSpan = document.querySelector('.score span')
 
 const gridSize = [
   {
@@ -113,6 +114,7 @@ function makeGrid(noc) {
   }
 }
 
+let score = 0;
 let pacmanStart = 256;
 // gridLayout[pacmanStart].classList.remove('power-pill')
 gridLayout[pacmanStart].classList.add('pacman')
@@ -140,11 +142,23 @@ function movePacman(event){
       break
   }
 
-  if(easy[nextStep] === PATH || easy[nextStep]=== POWERPILL)
+  if(easy[nextStep] === PATH || easy[nextStep] ===POWERPILL)
   { 
-    console.log(gridLayout[pacmanStart].children);
+    if(gridLayout[nextStep].children.length>=1)
+    {
+      if(easy[nextStep] === PATH)
+         score += 10;
+      else
+         score+=50;
+      scoreSpan.innerText = score;
+      if(gridLayout[pacmanStart].children.length>=1)
+      {
+        let currentCell = gridLayout[pacmanStart];
+        currentCell.removeChild(currentCell.childNodes[0])
+      }
+    }
     pacmanStart = nextStep;
-    gridLayout[nextStep].classList.add('pacman');
+    gridLayout[nextStep].classList.add('pacman'); 
   }
   else if(easy[nextStep] === WALL)
   gridLayout[pacmanStart].classList.add('pacman')
