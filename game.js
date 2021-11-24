@@ -142,15 +142,23 @@ function movePacman(event){
       break
   }
 
-  if(easy[nextStep] === PATH)
+  if(easy[nextStep] === PATH || easy[nextStep] ===POWERPILL)
   { 
-    if(gridLayout[nextStep].children)
-    {score += 10;
-    scoreSpan.innerText = score;
-    let currentCell = gridLayout[pacmanStart];
-    currentCell.removeChild(currentCell.childNodes[0]);}
+    if(gridLayout[nextStep].children.length>=1)
+    {
+      if(easy[nextStep] === PATH)
+         score += 10;
+      else
+         score+=50;
+      scoreSpan.innerText = score;
+      if(gridLayout[pacmanStart].children.length>=1)
+      {
+        let currentCell = gridLayout[pacmanStart];
+        currentCell.removeChild(currentCell.childNodes[0])
+      }
+    }
     pacmanStart = nextStep;
-    gridLayout[pacmanStart].classList.add('pacman');
+    gridLayout[nextStep].classList.add('pacman'); 
   }
   else if(easy[nextStep] === WALL)
   gridLayout[pacmanStart].classList.add('pacman')
