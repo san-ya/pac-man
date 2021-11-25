@@ -144,7 +144,7 @@ function movePacman(event){
 
   if(easy[nextStep] === PATH || easy[nextStep] ===POWERPILL)
   { 
-    if(gridLayout[nextStep].children.length>=1)
+    if(gridLayout[pacmanStart].children.length>=1)
     {
       if(easy[nextStep] === PATH)
          score += 10;
