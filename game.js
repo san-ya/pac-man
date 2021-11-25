@@ -84,6 +84,7 @@ const gridLayout = [];
 
 makeGrid(19 * 19);
 function makeGrid(noc) {
+  //create random power pellets
     for(i = 0; i<4; i++)
     {
         let randNum = Math.floor(Math.random() * easy.length);
@@ -96,6 +97,7 @@ function makeGrid(noc) {
             i--;
         }
     }
+
   for (i = 0; i < noc; i++) {
     let newCell = document.createElement("div");
     grid.appendChild(newCell).className = "cell";
@@ -147,15 +149,12 @@ function movePacman(event){
     if(gridLayout[pacmanStart].children.length>=1)
     {
       if(easy[nextStep] === PATH)
-         score += 10;
+        score += 10;
       else
-         score+=50;
+        score+=50;
       scoreSpan.innerText = score;
-      if(gridLayout[pacmanStart].children.length>=1)
-      {
-        let currentCell = gridLayout[pacmanStart];
-        currentCell.removeChild(currentCell.childNodes[0])
-      }
+      let currentCell = gridLayout[pacmanStart];
+      currentCell.removeChild(currentCell.childNodes[0])
     }
     pacmanStart = nextStep;
     gridLayout[nextStep].classList.add('pacman'); 
