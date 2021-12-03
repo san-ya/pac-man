@@ -33,7 +33,7 @@ const easy = [
     1,0,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,
     1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,
     1,0,1,0,1,0,1,1,1,0,1,1,1,0,1,0,1,0,1,
-    1,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,1,
+    0,0,1,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,
     1,0,1,0,1,0,1,1,1,0,1,1,1,0,1,0,1,0,1,
     1,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,1,
     1,0,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,
@@ -118,23 +118,24 @@ function makeGrid(noc) {
 
 let score = 0;
 let pacmanStart = 256;
-// gridLayout[pacmanStart].classList.remove('power-pill')
+gridLayout[pacmanStart].removeChild(gridLayout[pacmanStart].childNodes[0])
 gridLayout[pacmanStart].classList.add('pacman')
 
 function movePacman(event){
   gridLayout[pacmanStart].classList.remove('pacman')
-  // 37 = left
-  // 39 = right
-  // 40 = down
-  // 38 = up
+  // 37 = left | 39 = right | 40 = down | 38 = up
   let nextStep
-  
+
   switch(event.keyCode){
     case 37:
       nextStep = pacmanStart-1;
+      if(pacmanStart - 1 == 170)
+      nextStep = 189
       break
     case 39:
       nextStep = pacmanStart + 1;
+      if(pacmanStart + 1 == 190)
+      nextStep = 171
       break
     case 38:
       nextStep = pacmanStart - 19;
@@ -144,16 +145,19 @@ function movePacman(event){
       break
   }
 
-  if(easy[nextStep] === PATH || easy[nextStep] ===POWERPILL)
+  if(easy[nextStep] === PATH || easy[nextStep] === POWERPILL)
   { 
-    if(gridLayout[pacmanStart].children.length>=1)
+    if(gridLayout[nextStep].childElementCount)
     {
+      //increase score
       if(easy[nextStep] === PATH)
         score += 10;
       else
         score+=50;
       scoreSpan.innerText = score;
-      let currentCell = gridLayout[pacmanStart];
+
+      //remove pac-dot
+      let currentCell = gridLayout[nextStep];
       currentCell.removeChild(currentCell.childNodes[0])
     }
     pacmanStart = nextStep;
@@ -162,4 +166,33 @@ function movePacman(event){
   else if(easy[nextStep] === WALL)
   gridLayout[pacmanStart].classList.add('pacman')
 }
-document.addEventListener('keyup', movePacman)
+document.addEventListener('keydown', movePacman)
+
+
+//ghost class
+class GHOST{
+  constructor(className, startIdx, speed){
+    this.className = className
+    this.startIdx = startIdx
+    this.speed = speed
+    this.currIdx = startIdx
+    this.timerId = NaN
+  }
+}
+
+ghosts = [
+  new GHOST('blinky', 20, 200),
+  new GHOST('pinky',36,300),
+  new GHOST('inky',340,400),
+  new GHOST('clyde',324,500),
+]
+
+ghosts.forEach(ghost => {
+  gridLayout[ghost.currIdx].classList.add(ghost.className)
+  gridLayout[ghost.currIdx].classList.add('ghost')
+
+  if(gridLayout[ghost.currIdx].childElementCount)
+  {
+    gridLayout[ghost.currIdx].removeChild(gridLayout[ghost.currIdx].childNodes[0])
+  }
+})
