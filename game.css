@@ -1,63 +1,71 @@
-body{
-    background-color: black;
-    color: white;
+body {
+  background-color: black;
+  color: white;
 }
-.grid-wrapper{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: auto;
+.grid-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: auto;
 }
-.grid{
-    width: 38vw;
-    height: 38vw;
-    display: flex;
-    flex-wrap: wrap;
-    /* border: 2px solid #fff; */
-    /* border-radius: .5vw; */
+.grid {
+  width: 38vw;
+  height: 38vw;
+  display: flex;
+  flex-wrap: wrap;
+  /* border: 2px solid #fff; */
+  /* border-radius: .5vw; */
 }
 .cell {
-    width: 2vw;
-    height: 2vw;
-    justify-content: center;
-    display: inline-flex;
-    align-items: center;
+  width: 2vw;
+  height: 2vw;
+  justify-content: center;
+  display: inline-flex;
+  align-items: center;
 }
-.wall{
-    background-color: blue;
-    /* border: 1px solid blue;
-    box-sizing: border-box; */
+.wall {
+  /* background-color: blue; */
+  border: 1px solid blue;
+  box-sizing: border-box;
 }
-.pac-remove{
-    width: .5vw;
-    height: .5vw;
-    background-color: black;
-    border-radius: 50%;
+.pac-dot {
+  width: 0.5vw;
+  height: 0.5vw;
+  background-color: rgb(243, 243, 152);
+  border-radius: 50%;
+}
 
+.power-pill {
+  width: 1vw;
+  height: 1vw;
+  background-color: rgb(253, 168, 182);
+  border-radius: 50%;
 }
-.pac-dot{
-    width: .5vw;
-    height: .5vw;
-    background-color: rgb(243, 243, 152);
-    border-radius: 50%;
+.power-pill-toggle {
+  opacity: 0;
 }
-.pac{
-    width: .5vw;
-    height: .5vw;
-    background-color: black;
-    border-radius: 50%;
+.pacman {
+  background-image: url(./Assets/pac-man-logo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
 }
-.power-pill{
-    width: 1vw;
-    height: 1vw;
-    background-color: rgb(253, 168, 182);
-    border-radius: 50%;
+.ghost{
+  box-sizing: border-box;
+  border: .3vw solid black;
 }
-.power-pill-toggle{
-    opacity: 0;
+.blinky{
+  background-color: red;
 }
-.pacman
-{
-    background-color: yellow;
+.inky{
+  background-color: cyan;
+}
+.pinky{
+  background-color: #FFB8FF;
+}
+.clyde{
+  background-color: #FFB852;
+}
+.scared-ghost{
+  background-color: blue;
 }
