@@ -128,31 +128,9 @@ function movePacman(event){
   }
 
   if(gridLevel[nextStep] !== WALL && gridLevel[nextStep] !== GHOSTHOME)
-  { 
     pacmanStart = nextStep;
-    // if(gridLayout[nextStep].childElementCount)
-    // {
-    //   increase score
-    //   if(gridLevel[nextStep] === PATH)
-    //     score += 10;
-    //   else
-    //     {
-    //       score+=50;
-    //       ghosts.forEach(ghost => {
-    //         ghosts.isScared = true
-    //         console.log("ghosts have been scared");
-    //       })
-    //       setTimeout(unScareGhost, 10000)
-    //     }
-
-      
-    //   remove pac-dot and power-pill
-      
-    // }
-
-  }
   else
-  nextStep = pacmanStart
+  nextStep = pacmanStart;
 
   //add pacman to next step
   gridLayout[nextStep].classList.add('pacman');
@@ -265,7 +243,7 @@ function checkGameOver(){
 }
 
 function checkWin(){
-  if (score === 274) {
+  if (pacdotCount === 0) {
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
     document.removeEventListener('keyup', movePacman)
     setTimeout(function(){ alert("You have WON!"); }, 500)
