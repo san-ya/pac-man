@@ -1,30 +1,14 @@
 let grid = document.querySelector(".grid");
 let scoreSpan = document.querySelector('.score span')
 
-const gridSize = [
-  {
-    level: "easy",
-    gridRow: 19,
-    gridCol: 19,
-  },
-  {
-    level: "medium",
-    grid: 19,
-  },
-  {
-    level: "hard",
-    gridRow: 28,
-    gridCol: 31,
-  },
-];
-
 let PATH = 0;
 let WALL = 1;
 let GHOSTHOME = 2;
 let POWERPILL = 3;
+let pacdotCount = 0;
 
-const easy = [
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+const LEVELS = [
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,
     1,0,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,0,1,
     1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
@@ -42,76 +26,74 @@ const easy = [
     1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
     1,0,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,0,1,
     1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+      1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
+      1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
+      1,0,1,1,1,1,0,1,1,1,1,1,0,0,0,0,1,1,1,1,1,0,1,1,1,1,0,1,
+      1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
+      1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
+      1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,0,1,
+      1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,0,1,
+      1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,1,
+      1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,
+      1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,
+      1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,
+      1,0,1,1,1,1,0,1,1,0,1,1,1,2,2,1,1,1,0,1,1,0,1,1,1,1,0,1,
+      1,0,1,1,1,1,0,1,1,0,1,2,2,2,2,2,2,1,0,1,1,0,1,1,1,1,0,1,
+      1,0,0,0,0,0,0,1,1,0,1,2,2,2,2,2,2,1,0,1,1,0,0,0,0,0,0,1,
+      1,0,1,1,1,1,0,1,1,0,1,2,2,2,2,2,2,1,0,1,1,0,1,1,1,1,0,1,
+      1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,0,1,
+      1,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,1,
+      1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,
+      1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,
+      1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+      1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
+      1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
+      1,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,1,
+      1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,
+      1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,
+      1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,
+      1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
+      1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
+      1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
-const hard = [
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-    1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,0,0,0,0,1,1,1,1,1,0,1,1,1,1,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
-    1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
-    1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,0,1,
-    1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,0,1,
-    1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0,1,
-    1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,
-    1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,
-    1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,
-    1,0,1,1,1,1,0,1,1,0,1,1,1,2,2,1,1,1,0,1,1,0,1,1,1,1,0,1,
-    1,0,1,1,1,1,0,1,1,0,1,2,2,2,2,2,2,1,0,1,1,0,1,1,1,1,0,1,
-    1,0,0,0,0,0,0,1,1,0,1,2,2,2,2,2,2,1,0,1,1,0,0,0,0,0,0,1,
-    1,0,1,1,1,1,0,1,1,0,1,2,2,2,2,2,2,1,0,1,1,0,1,1,1,1,0,1,
-    1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,0,1,
-    1,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,1,
-    1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,
-    1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,
-    1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,11,1,1,,1,0,1,1,1,1,0,1,
-    1,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,1,
-    1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,
-    1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1,1,
-    1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
-    1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
-    1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-];
-
-
+let gridLevel = LEVELS[0]
 const gridLayout = [];
 
-makeGrid(19 * 19);
-function makeGrid(noc) {
   //create random power pellets
-    for(i = 0; i<4; i++)
-    {
-        let randNum = Math.floor(Math.random() * easy.length);
-        if(easy[randNum] === PATH)
-        {
-            easy[randNum] = POWERPILL;
-        }
-        else
-        {
-            i--;
-        }
-    }
+function generatePowerPill(){
+  for(i = 0; i<4; i++)
+  {
+    let randNum = Math.floor(Math.random() * gridLevel.length);
+    if(gridLevel[randNum] === PATH)
+      gridLevel[randNum] = POWERPILL;
+    else i--;
+  }
+}
 
-  for (i = 0; i < noc; i++) {
+
+makeGrid();
+function makeGrid() {
+    generatePowerPill();
+    for (i = 0; i < gridLevel.length; i++) {
     let newCell = document.createElement("div");
     grid.appendChild(newCell).className = "cell";
     gridLayout.push(newCell);
 
-    if (easy[i] === WALL) gridLayout[i].classList.add("wall");
-    else if (easy[i] === PATH) {
+    if (gridLevel[i] === WALL) gridLayout[i].classList.add("wall");
+    else if (gridLevel[i] === PATH) {
       let pacDot = document.createElement("div");
       newCell.appendChild(pacDot).className = "pac-dot";
+      pacdotCount++;
     }
-    else if(easy[i] === POWERPILL)
+    else if(gridLevel[i] === POWERPILL)
     {
-    let pacPill = document.createElement("div");
+      let pacPill = document.createElement("div");
       newCell.appendChild(pacPill).className = "power-pill";
+      pacdotCount++;
     }
   }
 }
@@ -145,29 +127,68 @@ function movePacman(event){
       break
   }
 
-  if(easy[nextStep] === PATH || easy[nextStep] === POWERPILL)
+  if(gridLevel[nextStep] !== WALL && gridLevel[nextStep] !== GHOSTHOME)
   { 
-    if(gridLayout[nextStep].childElementCount)
-    {
-      //increase score
-      if(easy[nextStep] === PATH)
-        score += 10;
-      else
-        score+=50;
-      scoreSpan.innerText = score;
-
-      //remove pac-dot
-      let currentCell = gridLayout[nextStep];
-      currentCell.removeChild(currentCell.childNodes[0])
-    }
     pacmanStart = nextStep;
-    gridLayout[nextStep].classList.add('pacman'); 
+    // if(gridLayout[nextStep].childElementCount)
+    // {
+    //   increase score
+    //   if(gridLevel[nextStep] === PATH)
+    //     score += 10;
+    //   else
+    //     {
+    //       score+=50;
+    //       ghosts.forEach(ghost => {
+    //         ghosts.isScared = true
+    //         console.log("ghosts have been scared");
+    //       })
+    //       setTimeout(unScareGhost, 10000)
+    //     }
+
+      
+    //   remove pac-dot and power-pill
+      
+    // }
+
   }
-  else if(easy[nextStep] === WALL)
-  gridLayout[pacmanStart].classList.add('pacman')
+  else
+  nextStep = pacmanStart
+
+  //add pacman to next step
+  gridLayout[nextStep].classList.add('pacman');
+  pacdotEaten();
+  powerPelletEaten();
 }
 document.addEventListener('keydown', movePacman)
 
+
+function pacdotEaten(){
+  if(gridLayout[pacmanStart].childElementCount && gridLayout[pacmanStart].childNodes[0].className == "pac-dot")
+  {
+    score += 10
+    scoreSpan.innerText = score;
+    let currentCell = gridLayout[pacmanStart];
+    currentCell.removeChild(currentCell.childNodes[0])
+    pacdotCount--;
+  } 
+}
+
+function powerPelletEaten(){
+  if(gridLayout[pacmanStart].childElementCount && gridLayout[pacmanStart].childNodes[0].className == "power-pill")
+  {
+    score += 50
+    scoreSpan.innerText = score;
+    let currentCell = gridLayout[pacmanStart];
+    currentCell.removeChild(currentCell.childNodes[0])
+    pacdotCount--;
+    ghosts.forEach(ghost => ghost.isScared = true)
+    setTimeout(unScareGhost, 10000)
+  }
+}
+
+function unScareGhost(){
+  ghosts.forEach(ghost => ghost.isScared = false)
+}
 
 //ghost class
 class GHOST{
@@ -177,22 +198,76 @@ class GHOST{
     this.speed = speed
     this.currIdx = startIdx
     this.timerId = NaN
+    this.isScared = false
   }
 }
 
 ghosts = [
-  new GHOST('blinky', 20, 200),
-  new GHOST('pinky',36,300),
-  new GHOST('inky',340,400),
-  new GHOST('clyde',324,500),
+  new GHOST('blinky', 20, 400),
+  new GHOST('pinky',36,450),
+  new GHOST('inky',340,550),
+  new GHOST('clyde',324,600),
 ]
 
 ghosts.forEach(ghost => {
-  gridLayout[ghost.currIdx].classList.add(ghost.className)
-  gridLayout[ghost.currIdx].classList.add('ghost')
-
-  if(gridLayout[ghost.currIdx].childElementCount)
-  {
-    gridLayout[ghost.currIdx].removeChild(gridLayout[ghost.currIdx].childNodes[0])
-  }
+  gridLayout[ghost.currIdx].classList.add(ghost.className, 'ghost')
 })
+
+ghosts.forEach(ghost => moveGhost(ghost))
+
+function moveGhost(ghost)
+{
+  const directions = [1,-1, 19, -19]
+  let nextPos = directions[Math.floor(Math.random() * directions.length)]
+
+  setInterval(function (){
+    if(!gridLayout[ghost.currIdx + nextPos].classList.contains('wall') &&
+    !gridLayout[ghost.currIdx + nextPos].classList.contains('ghost'))
+    {
+      gridLayout[ghost.currIdx].classList.remove('ghost', ghost.className, 'scared-ghost')
+      
+      ghost.currIdx += nextPos
+      gridLayout[ghost.currIdx].classList.add('ghost', ghost.className)
+    }
+
+    else
+    nextPos = directions[Math.floor(Math.random() * directions.length)]
+
+
+    if(ghost.isScared)
+    {
+      gridLayout[ghost.currIdx].classList.add('scared-ghost')
+      console.log('ghost is scared');
+    }
+    eatenGhost(ghost)
+    checkGameOver()
+  }, ghost.speed)
+}
+
+function eatenGhost(ghost){
+  if(ghost.isScared && gridLayout[ghost.currIdx].classList.contains('pacman')){
+    ghost.isScared = false
+    gridLayout[ghost.currIdx].classList.remove(ghost.className, 'ghost', 'scared-ghost')
+    ghost.currIdx = ghost.startIdx
+    score += 100
+    gridLayout[ghost.currIdx].classList.add(ghost.className, 'ghost')
+  }
+}
+
+function checkGameOver(){
+  if(gridLayout[pacmanStart].classList.contains('ghost')
+  && !gridLayout[pacmanStart].classList.contains('scared-ghost'))
+  {
+    ghosts.forEach(ghost => clearInterval(ghost.timerId))
+    document.removeEventListener('keydown', movePacman)
+    setTimeout(function(){console.log("Game Over");}, 500)
+  }
+}
+
+function checkWin(){
+  if (score === 274) {
+    ghosts.forEach(ghost => clearInterval(ghost.timerId))
+    document.removeEventListener('keyup', movePacman)
+    setTimeout(function(){ alert("You have WON!"); }, 500)
+  }
+}
