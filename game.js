@@ -127,8 +127,10 @@ function movePacman(event){
   // 39 = right
   // 40 = down
   // 38 = up
-  let nextStep
-  
+  let nextStep;
+  let target=1910;
+  if(score==target)
+    //win
   switch(event.keyCode){
     case 37:
       nextStep = pacmanStart-1;
@@ -163,3 +165,13 @@ function movePacman(event){
   gridLayout[pacmanStart].classList.add('pacman')
 }
 document.addEventListener('keyup', movePacman)
+
+class ghost{
+
+    constructor(name,start_idx,speed){
+
+      this.name=name;
+      this.start_idx=start_idx;
+      this.speed=speed;
+    }
+}
