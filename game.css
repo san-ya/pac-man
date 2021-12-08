@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 body {
   background-color: black;
   color: white;
+  font-family: 'Press Start 2P', cursive;
 }
 .grid-wrapper {
   display: flex;
@@ -16,6 +19,13 @@ body {
   flex-wrap: wrap;
   /* border: 2px solid #fff; */
   /* border-radius: .5vw; */
+}
+.details-wrap{
+  display: flex;
+  width: 38vw;
+  height: 5vw;
+  justify-content: space-between;
+  align-items: center;
 }
 .cell {
   width: 2vw;
@@ -68,4 +78,16 @@ body {
 }
 .scared-ghost{
   background-color: blue;
+}
+.pacman-lives{
+  width: 9vw;
+  height: 2vw;
+  display: inline-block;
+}
+.pacLife{
+  background-image: url();
+  background-size: cover;
+  height: 2vw;
+  width: 2vw;
+  margin-left: 1vw;
 }

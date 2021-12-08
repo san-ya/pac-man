@@ -1,11 +1,19 @@
 let grid = document.querySelector(".grid");
 let scoreSpan = document.querySelector('.score span')
+let pacmanLivesDiv = document.querySelector('.pacman-lives')
+const pacdotAudio = new Audio('./sounds/munch.wav')
+const powerpillAudio = new Audio('./sounds/pill.wav')
+const gameStartAudio = new Audio('./sounds/game_start.wav')
+const eatGhostAudio = new Audio('./sounds/eat_ghost.wav')
+const dieAudio = new Audio('./sounds/death.wav')
 
 let PATH = 0;
 let WALL = 1;
 let GHOSTHOME = 2;
 let POWERPILL = 3;
 let pacdotCount = 0;
+let pacmanLifeCount = 3;
+console.log(pacmanLifeCount);
 
 const LEVELS = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -27,6 +35,22 @@ const LEVELS = [
     1,0,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,0,1,
     1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+      1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
+      1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,0,1,
+      1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,
+      1,0,0,0,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,1,0,0,0,1,1,1,0,0,0,1,
+      1,1,1,0,1,0,1,0,1,0,1,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,1,1,1,
+      1,0,0,0,1,0,1,1,1,0,1,0,1,1,1,2,1,1,1,0,1,0,1,1,1,0,1,0,0,0,1,
+      1,0,1,1,1,0,0,0,0,0,0,0,1,2,2,2,2,2,1,0,0,0,0,0,0,0,1,1,1,0,1,
+      1,0,0,0,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,0,1,0,0,0,1,
+      1,1,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1,0,1,1,1,
+      1,0,0,0,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,0,0,0,1,
+      1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,
+      1,0,0,0,0,0,1,0,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,
+      1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,
+      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
       1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -58,23 +82,7 @@ const LEVELS = [
       1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
       1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
       1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-        1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
-        1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,0,1,
-        1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,
-        1,0,0,0,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,1,0,0,0,1,1,1,0,0,0,1,
-        1,1,1,0,1,0,1,0,1,0,1,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,1,1,1,
-        1,0,0,0,1,0,1,1,1,0,1,0,1,1,1,2,1,1,1,0,1,0,1,1,1,0,1,0,0,0,1,
-        1,0,1,1,1,0,0,0,0,0,0,0,1,2,2,2,2,2,1,0,0,0,0,0,0,0,1,1,1,0,1,
-        1,0,0,0,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,0,1,0,0,0,1,
-        1,1,1,0,1,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,1,0,1,1,1,
-        1,0,0,0,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,0,0,0,1,
-        1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,
-        1,0,0,0,0,0,1,0,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,
-        1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,
-        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
 let gridLevel = LEVELS[0]
@@ -94,82 +102,64 @@ function generatePowerPill(){
 
 makeGrid();
 function makeGrid() {
-    generatePowerPill();
-    for (i = 0; i < gridLevel.length; i++) {
-    let newCell = document.createElement("div");
-    grid.appendChild(newCell).className = "cell";
-    gridLayout.push(newCell);
+  // gameStartAudio.play();
+  generatePowerPill();
+  for (i = 0; i < gridLevel.length; i++) {
+  let newCell = document.createElement("div");
+  grid.appendChild(newCell).className = "cell";
+  gridLayout.push(newCell);
 
-    if (gridLevel[i] === WALL) gridLayout[i].classList.add("wall");
-    else if (gridLevel[i] === PATH) {
-      let pacDot = document.createElement("div");
-      newCell.appendChild(pacDot).className = "pac-dot";
-      pacdotCount++;
-    }
-    else if(gridLevel[i] === POWERPILL)
-    {
-      let pacPill = document.createElement("div");
-      newCell.appendChild(pacPill).className = "power-pill";
-      pacdotCount++;
-    }
+  if (gridLevel[i] === WALL) gridLayout[i].classList.add("wall");
+  else if (gridLevel[i] === PATH) {
+    let pacDot = document.createElement("div");
+    newCell.appendChild(pacDot).className = "pac-dot";
+    pacdotCount++;
+  }
+  else if(gridLevel[i] === POWERPILL)
+  {
+    let pacPill = document.createElement("div");
+    newCell.appendChild(pacPill).className = "power-pill";
+    pacdotCount++;
   }
 }
 
+  drawLives();
+}
+
 let score = 0;
-let pacmanStart = 256;
-gridLayout[pacmanStart].removeChild(gridLayout[pacmanStart].childNodes[0])
-gridLayout[pacmanStart].classList.add('pacman')
+const pacmanStart = 256;
+let pacCurrIdx = 256;
+gridLayout[pacCurrIdx].removeChild(gridLayout[pacCurrIdx].childNodes[0])
+gridLayout[pacCurrIdx].classList.add('pacman')
 
 function movePacman(event) {
-  gridLayout[pacmanStart].classList.remove('pacman')
+  gridLayout[pacCurrIdx].classList.remove('pacman')
   // 37 = left | 39 = right | 40 = down | 38 = up
   let nextStep
 
   switch(event.keyCode){
     case 37:
-      nextStep = pacmanStart-1;
-      if(pacmanStart - 1 == 170)
+      nextStep = pacCurrIdx-1;
+      if(pacCurrIdx - 1 == 170)
       nextStep = 189
       break
     case 39:
-      nextStep = pacmanStart + 1;
-      if(pacmanStart + 1 == 190)
+      nextStep = pacCurrIdx + 1;
+      if(pacCurrIdx + 1 == 190)
       nextStep = 171
       break
     case 38:
-      nextStep = pacmanStart - 19;
+      nextStep = pacCurrIdx - 19;
       break
     case 40:
-      nextStep = pacmanStart + 19;
+      nextStep = pacCurrIdx + 19;
       break
   }
 
   if(gridLevel[nextStep] !== WALL && gridLevel[nextStep] !== GHOSTHOME)
-  { 
-    pacmanStart = nextStep;
-    // if(gridLayout[nextStep].childElementCount)
-    // {
-    //   increase score
-    //   if(gridLevel[nextStep] === PATH)
-    //     score += 10;
-    //   else
-    //     {
-    //       score+=50;
-    //       ghosts.forEach(ghost => {
-    //         ghosts.isScared = true
-    //         console.log("ghosts have been scared");
-    //       })
-    //       setTimeout(unScareGhost, 10000)
-    //     }
-
-      
-    //   remove pac-dot and power-pill
-      
-    // }
-
-  }
+    pacCurrIdx = nextStep;
   else
-  nextStep = pacmanStart
+  nextStep = pacCurrIdx;
 
   //add pacman to next step
   gridLayout[nextStep].classList.add('pacman');
@@ -180,24 +170,26 @@ document.addEventListener('keydown', movePacman)
 
 
 function pacdotEaten(){
-  if(gridLayout[pacmanStart].childElementCount && gridLayout[pacmanStart].childNodes[0].className == "pac-dot")
+  if(gridLayout[pacCurrIdx].childElementCount && gridLayout[pacCurrIdx].childNodes[0].className == "pac-dot")
   {
     score += 10
     scoreSpan.innerText = score;
-    let currentCell = gridLayout[pacmanStart];
+    let currentCell = gridLayout[pacCurrIdx];
     currentCell.removeChild(currentCell.childNodes[0])
     pacdotCount--;
-  } 
+    pacdotAudio.play();
+  }
 }
 
 function powerPelletEaten(){
-  if(gridLayout[pacmanStart].childElementCount && gridLayout[pacmanStart].childNodes[0].className == "power-pill")
+  if(gridLayout[pacCurrIdx].childElementCount && gridLayout[pacCurrIdx].childNodes[0].className == "power-pill")
   {
     score += 50
     scoreSpan.innerText = score;
-    let currentCell = gridLayout[pacmanStart];
+    let currentCell = gridLayout[pacCurrIdx];
     currentCell.removeChild(currentCell.childNodes[0])
     pacdotCount--;
+    powerpillAudio.play();
     ghosts.forEach(ghost => ghost.isScared = true)
     setTimeout(unScareGhost, 10000)
   }
@@ -236,8 +228,7 @@ function moveGhost(ghost)
 {
   const directions = [1,-1, 19, -19]
   let nextPos = directions[Math.floor(Math.random() * directions.length)]
-
-  setInterval(function (){
+  ghost.timerId = setInterval(function (){
     if(!gridLayout[ghost.currIdx + nextPos].classList.contains('wall') &&
     !gridLayout[ghost.currIdx + nextPos].classList.contains('ghost'))
     {
@@ -252,17 +243,15 @@ function moveGhost(ghost)
 
 
     if(ghost.isScared)
-    {
       gridLayout[ghost.currIdx].classList.add('scared-ghost')
-      console.log('ghost is scared');
-    }
-    eatenGhost(ghost)
-    checkGameOver()
+    eatenGhost(ghost);
+    checkCollision();
   }, ghost.speed)
 }
 
 function eatenGhost(ghost){
   if(ghost.isScared && gridLayout[ghost.currIdx].classList.contains('pacman')){
+    eatGhostAudio.play();
     ghost.isScared = false
     gridLayout[ghost.currIdx].classList.remove(ghost.className, 'ghost', 'scared-ghost')
     ghost.currIdx = ghost.startIdx
@@ -271,20 +260,42 @@ function eatenGhost(ghost){
   }
 }
 
-function checkGameOver(){
-  if(gridLayout[pacmanStart].classList.contains('ghost')
-  && !gridLayout[pacmanStart].classList.contains('scared-ghost'))
+function checkCollision(){
+  if(gridLayout[pacCurrIdx].classList.contains('ghost')
+  && !gridLayout[pacCurrIdx].classList.contains('scared-ghost'))
   {
+  console.log("hey you are inside if");
+    if(pacmanLivesDiv.childElementCount)
+    {
+      ghosts.forEach(ghost => clearInterval(ghost.timerId))
+      gridLayout[pacCurrIdx].classList.remove('pacman')
+      gridLayout[pacmanStart].classList.add('pacman')
+      --pacmanLifeCount;
+      dieAudio.play();
+      console.log(pacmanLifeCount);
+      pacmanLivesDiv.removeChild(pacmanLivesDiv.firstChild)
+    }
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
     document.removeEventListener('keydown', movePacman)
     setTimeout(function(){console.log("Game Over");}, 500)
   }
 }
-
+checkWin()
 function checkWin(){
-  if (score === 274) {
+  if (pacdotCount === 1) {
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
     document.removeEventListener('keyup', movePacman)
     setTimeout(function(){ alert("You have WON!"); }, 500)
+  }
+}
+
+function drawLives()
+{
+  for(i=pacmanLifeCount; i>0; i--)
+  {
+    let pacLife = document.createElement('img');
+    pacLife.src = "./Assets/pacman-life.png"
+    pacLife.classList.add('pacLife');
+    pacmanLivesDiv.appendChild(pacLife);
   }
 }
