@@ -88,6 +88,25 @@ const LEVELS = [
 let gridLevel = LEVELS[0]
 const gridLayout = [];
 
+setDimGrid(0);
+function setDimGrid(level){
+
+  if(level==0)
+  {
+    grid.style.width='38vw';
+    grid.style.height='38vw';
+  }
+  else if(level==1)
+  {
+    grid.style.width='56vw';
+    grid.style.height='62vw';
+  }
+  else
+  {
+    grid.style.width='62vw';
+    grid.style.height='30vw';
+  }
+}
   //create random power pellets
 function generatePowerPill(){
   for(i = 0; i < 4; i++)
