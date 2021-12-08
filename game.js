@@ -77,10 +77,10 @@ const LEVELS = [
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
-let gridLevel = LEVELS[1]
+let gridLevel = LEVELS[0]
 const gridLayout = [];
 
-setDimGrid(1);
+setDimGrid(0);
 function setDimGrid(level){
 
   if(level==0)
