@@ -14,7 +14,7 @@ setInterval(function changeHeadColor() {
   }
 }, 100);
 
-window.onload = function (){
+window.onload = function () {
   startGameAudio.play();
   // startGameAudio.loop = true;
 }

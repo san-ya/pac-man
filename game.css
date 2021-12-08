@@ -25,9 +25,9 @@ body {
   align-items: center;
 }
 .wall {
-  background-color: blue;
-  /* border: 1px solid blue;
-    box-sizing: border-box; */
+  /* background-color: blue; */
+  border: 1px solid blue;
+  box-sizing: border-box;
 }
 .pac-dot {
   width: 0.5vw;
@@ -49,4 +49,23 @@ body {
   background-image: url(./Assets/pac-man-logo.png);
   background-size: contain;
   background-repeat: no-repeat;
+}
+.ghost{
+  box-sizing: border-box;
+  border: .3vw solid black;
+}
+.blinky{
+  background-color: red;
+}
+.inky{
+  background-color: cyan;
+}
+.pinky{
+  background-color: #FFB8FF;
+}
+.clyde{
+  background-color: #FFB852;
+}
+.scared-ghost{
+  background-color: blue;
 }
