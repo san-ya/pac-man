@@ -13,7 +13,6 @@ let GHOSTHOME = 2;
 let POWERPILL = 3;
 let pacdotCount = 0;
 let pacmanLifeCount = 3;
-console.log(pacmanLifeCount);
 
 const LEVELS = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -85,12 +84,12 @@ const LEVELS = [
       1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
-let gridLevel = LEVELS[0]
+let gridLevel = 0;
 const gridLayout = [];
-
-setDimGrid(0);
+let gridWidth = 19;
+let gridHeight = 19;
+setDimGrid(gridLevel);
 function setDimGrid(level){
-
   if(level==0)
   {
     grid.style.width='38vw';
@@ -147,7 +146,9 @@ function makeGrid() {
 
 let score = 0;
 const pacmanStart = 256;
+let rotatePac = 0;
 let pacCurrIdx = 256;
+const pacmanSpeed = 300;
 gridLayout[pacCurrIdx].removeChild(gridLayout[pacCurrIdx].childNodes[0])
 gridLayout[pacCurrIdx].classList.add('pacman')
 
@@ -161,17 +162,21 @@ function movePacman(event) {
       nextStep = pacCurrIdx-1;
       if(pacCurrIdx - 1 == 170)
       nextStep = 189
+      rotatePac = 180
       break
     case 39:
       nextStep = pacCurrIdx + 1;
       if(pacCurrIdx + 1 == 190)
       nextStep = 171
+      rotatePac = 0
       break
     case 38:
       nextStep = pacCurrIdx - 19;
+      rotatePac = 270
       break
     case 40:
       nextStep = pacCurrIdx + 19;
+      rotatePac = 90
       break
   }
 
@@ -182,6 +187,7 @@ function movePacman(event) {
 
   //add pacman to next step
   gridLayout[nextStep].classList.add('pacman');
+  gridLayout[nextStep].style.transform = `rotate(${rotatePac}deg)`
   pacdotEaten();
   powerPelletEaten();
   checkCollision();
@@ -196,7 +202,7 @@ function pacdotEaten(){
     scoreSpan.innerText = score;
     let currentCell = gridLayout[pacCurrIdx];
     currentCell.removeChild(currentCell.childNodes[0])
-    pacdotCount--;
+    --pacdotCount;
     pacdotAudio.play();
   }
 }
@@ -208,11 +214,15 @@ function powerPelletEaten(){
     scoreSpan.innerText = score;
     let currentCell = gridLayout[pacCurrIdx];
     currentCell.removeChild(currentCell.childNodes[0])
-    pacdotCount--;
+    --pacdotCount;
     powerpillAudio.play();
     ghosts.forEach(ghost => ghost.isScared = true)
     setTimeout(unScareGhost, 10000)
   }
+}
+
+function getCoord(index){
+  return [index % gridWidth, Math.floor(index/gridWidth)]
 }
 
 function unScareGhost(){
@@ -254,7 +264,24 @@ function moveGhost(ghost)
     {
       gridLayout[ghost.currIdx].classList.remove('ghost', ghost.className, 'scared-ghost')
       
+      const [ghostX, ghostY] = getCoord(ghost.currIdx);
+      const [pacX, pacY] = getCoord(pacCurrIdx);
+      const [ghostNewX, ghostNewY] = getCoord(ghost.currIdx + nextPos);
+
+      function isXcloser(){
+        if(ghostNewX - pacX > ghostX-pacX)
+        return true;
+        else return false; 
+      }
+      function isYcloser(){
+        if(ghostNewY - pacY > ghostY-pacY)
+        return true;
+        else return false; 
+      }
+      if(isXcloser || isYcloser)
       ghost.currIdx += nextPos
+      else
+      nextPos = directions[Math.floor(Math.random() * directions.length)]
       gridLayout[ghost.currIdx].classList.add('ghost', ghost.className)
     }
 
@@ -290,6 +317,7 @@ function checkCollision(){
       // ghosts.forEach(ghost => clearInterval(ghost.timerId))
       gridLayout[pacCurrIdx].classList.remove('pacman')
       gridLayout[pacmanStart].classList.add('pacman')
+      pacCurrIdx = pacmanStart
       --pacmanLifeCount;
       dieAudio.play();
       console.log(pacmanLifeCount);
