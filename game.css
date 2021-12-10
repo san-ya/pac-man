@@ -13,12 +13,8 @@ body {
   height: auto;
 }
 .grid {
-  width: 38vw;
-  height: 38vw;
-  display: flex;
-  flex-wrap: wrap;
-  /* border: 2px solid #fff; */
-  /* border-radius: .5vw; */
+  display: grid;
+  grid-template-columns: repeat(19, 2vw);
 }
 .details-wrap{
   display: flex;
@@ -35,7 +31,6 @@ body {
   align-items: center;
 }
 .wall {
-  /* background-color: blue; */
   border: 1px solid blue;
   box-sizing: border-box;
 }
@@ -56,7 +51,7 @@ body {
   opacity: 0;
 }
 .pacman {
-  background-image: url(./Assets/l3K.gif);
+  background-image: url(./Assets/pacman-move.gif);
   background-size: contain;
   background-repeat: no-repeat;
 }
