@@ -6,6 +6,7 @@ const powerpillAudio = new Audio('./sounds/pill.wav')
 const gameStartAudio = new Audio('./sounds/game_start.wav')
 const eatGhostAudio = new Audio('./sounds/eat_ghost.wav')
 const dieAudio = new Audio('./sounds/death.wav')
+let gameDetails = document.querySelector('.details-wrap')
 
 let PATH = 0;
 let WALL = 1;
@@ -24,7 +25,7 @@ let blinkyStart
 let pinkyStart
 let inkyStart
 let clydeStart
-const lvl = 2
+const lvl = 0
 
 const LEVELS = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -131,6 +132,8 @@ function setDimGrid(level){
     clydeStart = 431
   }
     grid.style = `grid-template-columns: repeat(${gridWidth}, 2vw);`
+    gameDetails.style.width = `${gridWidth * 2}vw`
+
 }
 
   //create random power pellets
