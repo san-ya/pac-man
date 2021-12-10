@@ -15,7 +15,6 @@ let POWERPILL = 3;
 let pacdotCount = 0;
 let pacmanLifeCount = 3;
 let gridLevel = []
-const gridLayout = [];
 let gridWidth = 0
 let score = 0;
 let pacmanStart = 0;
@@ -27,6 +26,7 @@ let inkyStart
 let clydeStart
 const lvl = 0
 
+const gridLayout = [];
 const LEVELS = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,
@@ -174,7 +174,29 @@ function makeGrid() {
 gridLayout[pacCurrIdx].removeChild(gridLayout[pacCurrIdx].childNodes[0])
 gridLayout[pacCurrIdx].classList.add('pacman')
 
+var interval = window.setInterval(function () {
+
+  gridLayout[pacCurrIdx].classList.remove('pacman')
+
+  nextStep = pacCurrIdx - gridWidth;
+  pacRotate = 270
+
+  if(gridLevel[nextStep] !== WALL && gridLevel[nextStep] !== GHOSTHOME)
+    pacCurrIdx = nextStep;
+  else
+    nextStep = pacCurrIdx;
+
+  //add pacman to next step
+  gridLayout[nextStep].classList.add('pacman');
+  gridLayout[nextStep].style.transform = `rotate(${pacRotate}deg)`
+  pacdotEaten();
+  powerPelletEaten();
+  checkCollision();
+  checkWin()
+}, 400);
+
 function movePacman(event) {
+  window.clearInterval(interval);
   gridLayout[pacCurrIdx].classList.remove('pacman')
   // 37 = left | 39 = right | 40 = down | 38 = up
   let nextStep
@@ -183,13 +205,13 @@ function movePacman(event) {
     case 37:
       nextStep = pacCurrIdx-1;
       if(lvl == 1 && pacCurrIdx - 1 == 170)
-      nextStep = 189
+         nextStep = 189
       pacRotate = 180
       break
     case 39:
       nextStep = pacCurrIdx + 1;
       if(lvl == 1 && pacCurrIdx + 1 == 190)
-      nextStep = 171
+         nextStep = 171
       pacRotate = 0
       break
     case 38:
@@ -210,10 +232,13 @@ function movePacman(event) {
   //add pacman to next step
   gridLayout[nextStep].classList.add('pacman');
   gridLayout[nextStep].style.transform = `rotate(${pacRotate}deg)`
+  
   pacdotEaten();
   powerPelletEaten();
   checkCollision();
-}
+  checkWin()
+}   //movepaman close
+
 document.addEventListener('keydown', movePacman)
 
 function pacdotEaten(){
