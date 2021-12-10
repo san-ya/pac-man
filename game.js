@@ -349,9 +349,18 @@ function checkCollision(){
     }
     else
     {
+      // game getting over after 4 rounds instead of 3
+      //pacman getting lost if key other than the 4 main pressed
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keydown', movePacman)
-      setTimeout(function(){console.log("Game Over");}, 500)
+      //alert("Game Over");
+      //setTimeout(function(){console.log("Game Over");}, 500)
+      // setTimeout(function(){
+      //   console.log("Game Over");
+         window.open('./gameOver.html', 'Game Over', 'width=480,height=420,left=380,top=110,scrollbars=yes');
+      // }, 500)
+
+      // gameOver();
   }
   }
 }
@@ -373,4 +382,28 @@ function drawLives()
     pacLife.classList.add('pacLife');
     pacmanLivesDiv.appendChild(pacLife);
   }
+}
+
+//not going to home page 
+function exit(){
+  window.close();
+  if (!window.opener.closed) {
+    window.location='index.html';
+}
+  
+}
+//not restarting
+function restart(){
+  //document.getElementById("gameOver").style.display = "none";
+  //window.close();
+  //location.reload();
+
+  //window.location.reload();
+  window.close();
+  if (!window.opener.closed) {
+    window.opener.location.reload();
+}
+  self.opener.location.reload(); 
+  //location.replace('/game.html')
+  //window.location='game.html';
 }
