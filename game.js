@@ -13,6 +13,18 @@ let GHOSTHOME = 2;
 let POWERPILL = 3;
 let pacdotCount = 0;
 let pacmanLifeCount = 3;
+let gridLevel = []
+const gridLayout = [];
+let gridWidth = 0
+let score = 0;
+let pacmanStart = 0;
+let pacCurrIdx = 0;
+let pacRotate = 0;
+let blinkyStart
+let pinkyStart
+let inkyStart
+let clydeStart
+const lvl = 2
 
 const LEVELS = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -40,7 +52,7 @@ const LEVELS = [
       1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,0,1,
       1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,
       1,0,0,0,1,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,1,0,0,0,1,1,1,0,0,0,1,
-      1,1,1,0,1,0,1,0,1,0,1,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0,1,0,1,1,1,
+      1,1,1,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,1,1,1,
       1,0,0,0,1,0,1,1,1,0,1,0,1,1,1,2,1,1,1,0,1,0,1,1,1,0,1,0,0,0,1,
       1,0,1,1,1,0,0,0,0,0,0,0,1,2,2,2,2,2,1,0,0,0,0,0,0,0,1,1,1,0,1,
       1,0,0,0,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,0,1,0,0,0,1,
@@ -84,26 +96,43 @@ const LEVELS = [
       1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
-let gridLevel = LEVELS[0]
-const gridLayout = [];
-setDimGrid(0);
+//0 = easy, 1 = medium, 2 = hard
+setDimGrid(lvl)
 function setDimGrid(level){
-  if(level==0)
+  gridLevel = LEVELS[level]
+  if(level===0)
   {
-    grid.style.width='38vw';
-    grid.style.height='38vw';
+    gridWidth=19
+    pacmanStart = 256
+    pacCurrIdx = 256
+    blinkyStart = 20
+    pinkyStart = 36
+    inkyStart = 340
+    clydeStart = 324
   }
-  else if(level==1)
+  else if(level===1)
   {
-    grid.style.width='56vw';
-    grid.style.height='62vw';
+    gridWidth=31
+    pacmanStart = 324
+    pacCurrIdx = 324
+    blinkyStart = 230
+    pinkyStart = 231
+    inkyStart = 232
+    clydeStart = 233
   }
   else
   {
-    grid.style.width='62vw';
-    grid.style.height='30vw';
+    gridWidth=28
+    pacmanStart = 489
+    pacCurrIdx = 489
+    blinkyStart = 375
+    pinkyStart = 380
+    inkyStart = 436
+    clydeStart = 431
   }
+    grid.style = `grid-template-columns: repeat(${gridWidth}, 2vw);`
 }
+
   //create random power pellets
 function generatePowerPill(){
   for(i = 0; i < 4; i++)
@@ -138,14 +167,9 @@ function makeGrid() {
     pacdotCount++;
   }
 }
-
   drawLives();
 }
 
-let score = 0;
-const pacmanStart = 256;
-let pacCurrIdx = 256;
-let pacRotate = 0
 gridLayout[pacCurrIdx].removeChild(gridLayout[pacCurrIdx].childNodes[0])
 gridLayout[pacCurrIdx].classList.add('pacman')
 
@@ -157,22 +181,22 @@ function movePacman(event) {
   switch(event.keyCode){
     case 37:
       nextStep = pacCurrIdx-1;
-      if(pacCurrIdx - 1 == 170)
+      if(lvl == 1 && pacCurrIdx - 1 == 170)
       nextStep = 189
       pacRotate = 180
       break
     case 39:
       nextStep = pacCurrIdx + 1;
-      if(pacCurrIdx + 1 == 190)
+      if(lvl == 1 && pacCurrIdx + 1 == 190)
       nextStep = 171
       pacRotate = 0
       break
     case 38:
-      nextStep = pacCurrIdx - 19;
+      nextStep = pacCurrIdx - gridWidth;
       pacRotate = 270
       break
     case 40:
-      nextStep = pacCurrIdx + 19;
+      nextStep = pacCurrIdx + gridWidth;
       pacRotate = 90
       break
   }
@@ -184,13 +208,12 @@ function movePacman(event) {
 
   //add pacman to next step
   gridLayout[nextStep].classList.add('pacman');
-  gridLayout[nextStep].style.transform = `rotate${pacRotate}deg`
+  gridLayout[nextStep].style.transform = `rotate(${pacRotate}deg)`
   pacdotEaten();
   powerPelletEaten();
   checkCollision();
 }
 document.addEventListener('keydown', movePacman)
-
 
 function pacdotEaten(){
   if(gridLayout[pacCurrIdx].childElementCount && gridLayout[pacCurrIdx].childNodes[0].className == "pac-dot")
@@ -235,10 +258,10 @@ class GHOST{
 }
 
 ghosts = [
-  new GHOST('blinky', 20, 400),
-  new GHOST('pinky',36,450),
-  new GHOST('inky',340,550),
-  new GHOST('clyde',324,600),
+  new GHOST('blinky',blinkyStart, 400),
+  new GHOST('pinky',pinkyStart,450),
+  new GHOST('inky',inkyStart,550),
+  new GHOST('clyde',clydeStart,600),
 ]
 
 ghosts.forEach(ghost => {
@@ -249,14 +272,13 @@ ghosts.forEach(ghost => moveGhost(ghost))
 
 function moveGhost(ghost)
 {
-  const directions = [1,-1, 19, -19]
+  const directions = [1,-1, gridWidth, -gridWidth]
   let nextPos = directions[Math.floor(Math.random() * directions.length)]
   ghost.timerId = setInterval(function (){
     if(!gridLayout[ghost.currIdx + nextPos].classList.contains('wall') &&
     !gridLayout[ghost.currIdx + nextPos].classList.contains('ghost'))
     {
       gridLayout[ghost.currIdx].classList.remove('ghost', ghost.className, 'scared-ghost')
-      
       ghost.currIdx += nextPos
       gridLayout[ghost.currIdx].classList.add('ghost', ghost.className)
     }
@@ -287,15 +309,14 @@ function checkCollision(){
   if(gridLayout[pacCurrIdx].classList.contains('ghost')
   && !gridLayout[pacCurrIdx].classList.contains('scared-ghost'))
   {
-    console.log("hey you are inside if");
     if(pacmanLivesDiv.childElementCount)
     {
       // ghosts.forEach(ghost => clearInterval(ghost.timerId))
       gridLayout[pacCurrIdx].classList.remove('pacman')
       gridLayout[pacmanStart].classList.add('pacman')
+      pacCurrIdx = pacmanStart
       --pacmanLifeCount;
       dieAudio.play();
-      console.log(pacmanLifeCount);
       pacmanLivesDiv.removeChild(pacmanLivesDiv.firstChild)
     }
     else
