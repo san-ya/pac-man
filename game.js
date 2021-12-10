@@ -283,7 +283,7 @@ function checkCollision(){
   if(gridLayout[pacCurrIdx].classList.contains('ghost')
   && !gridLayout[pacCurrIdx].classList.contains('scared-ghost'))
   {
-  console.log("hey you are inside if");
+    console.log("hey you are inside if");
     if(pacmanLivesDiv.childElementCount)
     {
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
@@ -294,9 +294,12 @@ function checkCollision(){
       console.log(pacmanLifeCount);
       pacmanLivesDiv.removeChild(pacmanLivesDiv.firstChild)
     }
-    ghosts.forEach(ghost => clearInterval(ghost.timerId))
-    document.removeEventListener('keydown', movePacman)
-    setTimeout(function(){console.log("Game Over");}, 500)
+    else
+    {
+      ghosts.forEach(ghost => clearInterval(ghost.timerId))
+      document.removeEventListener('keydown', movePacman)
+      setTimeout(function(){console.log("Game Over");}, 500)
+    }
   }
 }
 checkWin()
