@@ -31,7 +31,8 @@ body {
   align-items: center;
 }
 .wall {
-  border: 1px solid blue;
+  /*border: 1px solid blue;*/
+  background-color: rgb(0, 38, 255);
   box-sizing: border-box;
 }
 .pac-dot {
@@ -60,19 +61,34 @@ body {
   border: .3vw solid black;
 }
 .blinky{
-  background-color: red;
+  background-image: url(./Assets/blinky.gif);
+  background-size: contain;
+  background-color: black;
+  background-repeat: no-repeat;
 }
 .inky{
-  background-color: cyan;
+  background-image: url(./Assets/inky.gif);
+  background-size: contain;
+  background-color: black;
+  background-repeat: no-repeat;
 }
 .pinky{
-  background-color: #FFB8FF;
+  background-image: url(./Assets/pinky.gif);
+  background-size: contain;
+  background-color: black;
+  background-repeat: no-repeat;
 }
 .clyde{
-  background-color: #FFB852;
+  background-image: url(./Assets/clyde.gif);
+  background-size: contain;
+  background-color: black;
+  background-repeat: no-repeat;
 }
 .scared-ghost{
-  background-color: blue;
+  background-image: url(./Assets/scared.gif);
+  background-size: contain;
+  background-color: black;
+  background-repeat: no-repeat;
 }
 .pacman-lives{
   width: 9vw;
