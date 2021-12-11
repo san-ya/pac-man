@@ -43,8 +43,8 @@ body {
 }
 
 .power-pill {
-  width: 1vw;
-  height: 1vw;
+  width: 1.2vw;
+  height: 1.2vw;
   animation-name: blink;
   animation-duration: 0.3s;
   animation-direction: alternate;
