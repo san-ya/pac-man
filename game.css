@@ -43,14 +43,24 @@ body {
 }
 
 .power-pill {
-  width: 1vw;
-  height: 1vw;
+  width: 1.2vw;
+  height: 1.2vw;
+  animation-name: blink;
+  animation-duration: 0.3s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
   background-color: rgb(253, 168, 182);
   border-radius: 50%;
 }
-.power-pill-toggle {
-  opacity: 0;
-}
+
+@keyframes blink{
+   from {
+     opacity: 1;
+   }
+   to{
+     opacity: 0.3;
+   }
+} 
 .pacman {
   background-image: url(./Assets/pacman-move.gif);
   background-size: contain;
