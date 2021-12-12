@@ -18,6 +18,7 @@ let gridLevel = []
 let gridWidth = 0
 let score = 0;
 let pacmanStart = 0;
+const pacmanSpeed = 300;
 let pacCurrIdx = 0;
 let pacRotate = 0;
 let blinkyStart
@@ -47,7 +48,6 @@ const LEVELS = [
     1,0,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,0,1,
     1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-    
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
       1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
       1,0,1,1,1,0,1,0,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,0,1,
@@ -63,7 +63,6 @@ const LEVELS = [
       1,0,0,0,0,0,1,0,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,1,1,0,1,
       1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,1,
       1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
       1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
       1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
@@ -180,8 +179,8 @@ var interval = window.setInterval(function () {
 
   gridLayout[pacCurrIdx].classList.remove('pacman')
 
-  nextStep = pacCurrIdx - gridWidth;
-  pacRotate = 270
+  nextStep = pacCurrIdx + 1;
+  pacRotate = 0
 
   if(gridLevel[nextStep] !== WALL && gridLevel[nextStep] !== GHOSTHOME)
     pacCurrIdx = nextStep;
@@ -195,7 +194,7 @@ var interval = window.setInterval(function () {
   powerPelletEaten();
   checkCollision();
   checkWin()
-}, 400);
+}, pacmanSpeed);
 
 function movePacman(event) {
   window.clearInterval(interval);
@@ -206,13 +205,13 @@ function movePacman(event) {
   switch(event.keyCode){
     case 37:
       nextStep = pacCurrIdx-1;
-      if(lvl == 1 && pacCurrIdx - 1 == 170)
-         nextStep = 189
+      if(lvl == 0 && pacCurrIdx - 1 == 170)
+      nextStep = 189
       pacRotate = 180
       break
     case 39:
       nextStep = pacCurrIdx + 1;
-      if(lvl == 1 && pacCurrIdx + 1 == 190)
+      if(lvl == 0 && pacCurrIdx + 1 == 190)
          nextStep = 171
       pacRotate = 0
       break
@@ -240,7 +239,6 @@ function movePacman(event) {
   checkCollision();
   checkWin()
 }   //movepaman close
-
 document.addEventListener('keydown', movePacman)
 
 function pacdotEaten(){
