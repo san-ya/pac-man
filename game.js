@@ -352,16 +352,9 @@ function checkCollision(){
     }
     else
     {
-      //pacman getting lost if key other than the 4 main pressed
       document.removeEventListener('keydown', movePacman)
-      //alert("Game Over");
-      //setTimeout(function(){console.log("Game Over");}, 500)
-      // setTimeout(function(){
-      //   console.log("Game Over");
+    
       gameOverModal.style.display = "flex";
-      // }, 500)
-
-      // gameOver();
   }
   }
 }
@@ -389,7 +382,7 @@ function drawLives()
 function exit(){
     window.location='index.html'; 
 }
-//not restarting
+
 function restart(){
   window.location='game.html';
 }
