@@ -385,26 +385,11 @@ function drawLives()
   }
 }
 
-//not going to home page 
+
 function exit(){
-  window.close();
-  if (!window.opener.closed) {
-    window.location='index.html';
-}
-  
+    window.location='index.html'; 
 }
 //not restarting
 function restart(){
-  //document.getElementById("gameOver").style.display = "none";
-  //window.close();
-  //location.reload();
-
-  //window.location.reload();
-  window.close();
-  if (!window.opener.closed) {
-    window.opener.location.reload();
-}
-  self.opener.location.reload(); 
-  //location.replace('/game.html')
-  //window.location='game.html';
+  window.location='game.html';
 }
