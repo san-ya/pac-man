@@ -7,7 +7,7 @@ const gameStartAudio = new Audio('./sounds/game_start.wav')
 const eatGhostAudio = new Audio('./sounds/eat_ghost.wav')
 const dieAudio = new Audio('./sounds/death.wav')
 let gameDetails = document.querySelector('.details-wrap')
-
+let gameOverModal=document.querySelector(".gameOverModal");
 let PATH = 0;
 let WALL = 1;
 let GHOSTHOME = 2;
@@ -199,7 +199,10 @@ var interval = window.setInterval(function () {
 
 function movePacman(event) {
   window.clearInterval(interval);
-  gridLayout[pacCurrIdx].classList.remove('pacman')
+  if(event.keyCode==37 || event.keyCode==39 || event.keyCode==40 || event.keyCode==38)
+    gridLayout[pacCurrIdx].classList.remove('pacman')
+  else
+    return;
   // 37 = left | 39 = right | 40 = down | 38 = up
   let nextStep
 
@@ -224,6 +227,7 @@ function movePacman(event) {
       nextStep = pacCurrIdx + gridWidth;
       pacRotate = 90
       break
+    default:break;
   }
 
   if(gridLevel[nextStep] !== WALL && gridLevel[nextStep] !== GHOSTHOME)
@@ -336,8 +340,8 @@ function eatenGhost(ghost){
 function checkCollision(){
   if(gridLayout[pacCurrIdx].classList.contains('ghost')
   && !gridLayout[pacCurrIdx].classList.contains('scared-ghost'))
-  {
-    if(pacmanLivesDiv.childElementCount)
+  { 
+    if(pacmanLivesDiv.childElementCount>1)
     {
       // ghosts.forEach(ghost => clearInterval(ghost.timerId))
       gridLayout[pacCurrIdx].classList.remove('pacman')
@@ -353,20 +357,9 @@ function checkCollision(){
       //pacman getting lost if key other than the 4 main pressed
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keydown', movePacman)
-<<<<<<< Updated upstream
-      //alert("Game Over");
-      //setTimeout(function(){console.log("Game Over");}, 500)
-      // setTimeout(function(){
-      //   console.log("Game Over");
-         window.open('./gameOver.html', 'Game Over', 'width=480,height=420,left=380,top=110,scrollbars=yes');
-      // }, 500)
-
-      // gameOver();
-=======
       
       gameOverModal.style.display = "flex";
      
->>>>>>> Stashed changes
   }
   }
 }

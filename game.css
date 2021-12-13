@@ -103,12 +103,6 @@ body {
   margin-left: 1vw;
 }
 
-<<<<<<< Updated upstream
-.popup-container .btn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 16px 20px;
-=======
 .gameOverModal{
   display: none;
   justify-content: center;
@@ -143,7 +137,6 @@ body {
   text-transform: uppercase;
   font-family: 'Press Start 2P', cursive;
   outline: none;
->>>>>>> Stashed changes
   border: none;
   cursor: pointer;
   /* width: 100%; */
