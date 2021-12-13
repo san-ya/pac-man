@@ -7,6 +7,7 @@ const gameStartAudio = new Audio('./sounds/game_start.wav')
 const eatGhostAudio = new Audio('./sounds/eat_ghost.wav')
 const dieAudio = new Audio('./sounds/death.wav')
 let gameDetails = document.querySelector('.details-wrap')
+let gameOverModal = document.querySelector('.gameOverModal')
 
 let PATH = 0;
 let WALL = 1;
@@ -223,6 +224,9 @@ function movePacman(event) {
       nextStep = pacCurrIdx + gridWidth;
       pacRotate = 90
       break
+    default:
+      nextStep = pacCurrIdx
+      break
   }
 
   if(gridLevel[nextStep] !== WALL && gridLevel[nextStep] !== GHOSTHOME)
@@ -335,8 +339,9 @@ function checkCollision(){
   if(gridLayout[pacCurrIdx].classList.contains('ghost')
   && !gridLayout[pacCurrIdx].classList.contains('scared-ghost'))
   {
-    if(pacmanLivesDiv.childElementCount)
+    if(pacmanLivesDiv.childElementCount!=1)
     {
+      console.log(pacmanLivesDiv.childElementCount);
       // ghosts.forEach(ghost => clearInterval(ghost.timerId))
       gridLayout[pacCurrIdx].classList.remove('pacman')
       gridLayout[pacmanStart].classList.add('pacman')
@@ -347,15 +352,13 @@ function checkCollision(){
     }
     else
     {
-      // game getting over after 4 rounds instead of 3
       //pacman getting lost if key other than the 4 main pressed
-      ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keydown', movePacman)
       //alert("Game Over");
       //setTimeout(function(){console.log("Game Over");}, 500)
       // setTimeout(function(){
       //   console.log("Game Over");
-         window.open('./gameOver.html', 'Game Over', 'width=480,height=420,left=380,top=110,scrollbars=yes');
+      gameOverModal.style.display = "flex";
       // }, 500)
 
       // gameOver();
