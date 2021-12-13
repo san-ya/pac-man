@@ -103,10 +103,47 @@ body {
   margin-left: 1vw;
 }
 
+<<<<<<< Updated upstream
 .popup-container .btn {
   background-color: #04AA6D;
   color: white;
   padding: 16px 20px;
+=======
+.gameOverModal{
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.171);
+  backdrop-filter: blur(1px);
+}
+
+.modalConatiner{
+  background-color: black ;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 25vw;
+  height: 20vw;
+  border: solid 8px turquoise;
+  border-radius: 1vw;
+  border-image: linear-gradient(45deg, rgb(231, 22, 102), rgb(230, 226, 17)) 1;
+
+}
+
+.btn{
+  width: 15vw;
+  height: 4vw;
+  text-transform: uppercase;
+  font-family: 'Press Start 2P', cursive;
+  outline: none;
+>>>>>>> Stashed changes
   border: none;
   cursor: pointer;
   /* width: 100%; */

@@ -353,6 +353,7 @@ function checkCollision(){
       //pacman getting lost if key other than the 4 main pressed
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keydown', movePacman)
+<<<<<<< Updated upstream
       //alert("Game Over");
       //setTimeout(function(){console.log("Game Over");}, 500)
       // setTimeout(function(){
@@ -361,6 +362,11 @@ function checkCollision(){
       // }, 500)
 
       // gameOver();
+=======
+      
+      gameOverModal.style.display = "flex";
+     
+>>>>>>> Stashed changes
   }
   }
 }
@@ -384,26 +390,12 @@ function drawLives()
   }
 }
 
-//not going to home page 
-function exit(){
-  window.close();
-  if (!window.opener.closed) {
-    window.location='index.html';
-}
-  
-}
-//not restarting
-function restart(){
-  //document.getElementById("gameOver").style.display = "none";
-  //window.close();
-  //location.reload();
 
-  //window.location.reload();
-  window.close();
-  if (!window.opener.closed) {
-    window.opener.location.reload();
+function exit(){
+  window.location='index.html';
 }
-  self.opener.location.reload(); 
-  //location.replace('/game.html')
-  //window.location='game.html';
+
+function restart(){ 
+		window.location='game.html';
+ 
 }
