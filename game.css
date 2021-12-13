@@ -99,21 +99,52 @@ body {
   margin-left: 1vw;
 }
 
-.popup-container .btn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 16px 20px;
+.gameOverModal{
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.171);
+  backdrop-filter: blur(1px);
+}
+
+.modalConatiner{
+  background-color: black ;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 25vw;
+  height: 15vw;
+  border: .3vw solid #FABB51;
+  border-radius: 1vw;
+}
+.btn{
+  width: 15vw;
+  height: 4vw;
+  text-transform: uppercase;
+  font-family: 'Press Start 2P', cursive;
+  outline: none;
   border: none;
-  cursor: pointer;
-  /* width: 100%; */
-  margin-bottom:10px;
-  opacity: 0.8;
+  border-radius: .5vw;
 }
 
-.popup-container .cancel {
+.btn-restart{
+  background-color: #04AA6D;
+  color: #fff;
+}
+.btn-restart:hover{
+  background-color: #04aa6d9d;
+}
+.btn-quit{
   background-color: red;
+  color: white;
 }
-
-.popup-container .btn:hover {
-  opacity: 1;
+.btn-quit:hover{
+  background-color: rgba(255, 0, 0, 0.733);
 }
