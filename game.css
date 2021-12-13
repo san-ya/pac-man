@@ -120,10 +120,12 @@ body {
   justify-content: space-evenly;
   align-items: center;
   width: 25vw;
-  height: 15vw;
-  border: .3vw solid #FABB51;
+  height: 20vw;
+  border: solid 8px turquoise;
   border-radius: 1vw;
+  border-image: linear-gradient(45deg, rgb(231, 22, 102), rgb(230, 226, 17)) 1;
 }
+
 .btn{
   width: 15vw;
   height: 4vw;

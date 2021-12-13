@@ -352,16 +352,9 @@ function checkCollision(){
     }
     else
     {
-      //pacman getting lost if key other than the 4 main pressed
       document.removeEventListener('keydown', movePacman)
-      //alert("Game Over");
-      //setTimeout(function(){console.log("Game Over");}, 500)
-      // setTimeout(function(){
-      //   console.log("Game Over");
+    
       gameOverModal.style.display = "flex";
-      // }, 500)
-
-      // gameOver();
   }
   }
 }
@@ -385,26 +378,11 @@ function drawLives()
   }
 }
 
-//not going to home page 
-function exit(){
-  window.close();
-  if (!window.opener.closed) {
-    window.location='index.html';
-}
-  
-}
-//not restarting
-function restart(){
-  //document.getElementById("gameOver").style.display = "none";
-  //window.close();
-  //location.reload();
 
-  //window.location.reload();
-  window.close();
-  if (!window.opener.closed) {
-    window.opener.location.reload();
+function exit(){
+    window.location='index.html'; 
 }
-  self.opener.location.reload(); 
-  //location.replace('/game.html')
-  //window.location='game.html';
+
+function restart(){
+  window.location='game.html';
 }
