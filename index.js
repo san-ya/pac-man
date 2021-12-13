@@ -14,6 +14,14 @@ setInterval(function changeHeadColor() {
   }
 }, 100);
 
+//Prompt
+function getName() {
+  let person = prompt("Please enter your name:");
+	if (person != null){
+		window.location='game.html';
+  }	
+}
+
 window.onload = function () {
   startGameAudio.play();
   // startGameAudio.loop = true;

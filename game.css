@@ -98,3 +98,22 @@ body {
   width: 2vw;
   margin-left: 1vw;
 }
+
+.popup-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  /* width: 100%; */
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+.popup-container .cancel {
+  background-color: red;
+}
+
+.popup-container .btn:hover {
+  opacity: 1;
+}
