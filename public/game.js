@@ -8,6 +8,7 @@ const eatGhostAudio = new Audio('./sounds/eat_ghost.wav')
 const dieAudio = new Audio('./sounds/death.wav')
 let gameDetails = document.querySelector('.details-wrap')
 let gameOverModal = document.querySelector('.gameOverModal')
+let level=document.getElementById("level");
 
 let PATH = 0;
 let WALL = 1;
@@ -26,8 +27,8 @@ let blinkyStart
 let pinkyStart
 let inkyStart
 let clydeStart
-const lvl = 0
-
+const lvl = level.value;
+console.log(level);
 const gridLayout = [];
 const LEVELS = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,

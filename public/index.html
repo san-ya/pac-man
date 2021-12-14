@@ -28,13 +28,19 @@
       </button> -->
       <form method="get" action="\login" onsubmit="start()" type="submit"> 
       <input type="text" name="username" id="username" placeholder="Enter the username.." required>
-      <br>
+        <br>
       <button onclick="start()" type="submit" id="start-game">
         Start
       </button>
+      <br><br>
+      <select name="levelChoose" id="level">
+        <option value="0">Easy</option>
+        <option value="1">Medium</option>
+        <option value="2">Hard</option>
+      </select>
       </form>
     </div>
-
+    <script src="./game.js"></script>
     <script src="./index.js"></script>
   </body>
 </html>
