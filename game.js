@@ -8,7 +8,6 @@ const eatGhostAudio = new Audio('./sounds/eat_ghost.wav')
 const dieAudio = new Audio('./sounds/death.wav')
 let gameDetails = document.querySelector('.details-wrap')
 let gameOverModal = document.querySelector('.gameOverModal')
-
 let PATH = 0;
 let WALL = 1;
 let GHOSTHOME = 2;
