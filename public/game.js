@@ -1,3 +1,4 @@
+
 let grid = document.querySelector(".grid");
 let scoreSpan = document.querySelector('.score span')
 let pacmanLivesDiv = document.querySelector('.pacman-lives')
@@ -8,8 +9,6 @@ const eatGhostAudio = new Audio('./sounds/eat_ghost.wav')
 const dieAudio = new Audio('./sounds/death.wav')
 let gameDetails = document.querySelector('.details-wrap')
 let gameOverModal = document.querySelector('.gameOverModal')
-let level=document.getElementById("level");
-
 let PATH = 0;
 let WALL = 1;
 let GHOSTHOME = 2;
@@ -27,8 +26,10 @@ let blinkyStart
 let pinkyStart
 let inkyStart
 let clydeStart
-const lvl = level.value;
-console.log(level);
+let leveldoc=document.getElementById("level");
+
+const lvl=leveldoc.innerText;
+console.log(lvl);
 const gridLayout = [];
 const LEVELS = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
