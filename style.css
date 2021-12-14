@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
+:root{
+    --font-main: 'Press Start 2P', cursive;
+    --color-pink: #FFB8FF;
+    --color-yellow: #FFB852;
+}
 .game-main-container{
     display: flex;
     flex-direction: column;
@@ -9,7 +13,7 @@
 }
 *{
     color: white;
-    font-family: 'Press Start 2P', cursive;
+    font-family: var(--font-main)
 }
 h1{
     text-align: center;
@@ -20,10 +24,10 @@ h1 span:nth-child(1){
     color: cyan;
 }
 h1 span:nth-child(2){
-    color: #FFB8FF;
+    color: var(--color-pink);
 }
 h1 span:nth-child(3){
-    color: #FFB852;
+    color: var(--color-yellow);
 }
 h1 span:nth-child(4){
     color: red;
@@ -32,7 +36,7 @@ h1 span:nth-child(5){
     color: cyan;
 }
 h1 span:nth-child(6){
-    color: #FFB8FF;
+    color: var(--color-pink);
 }
 .pacman-gif{
     height: 5rem;

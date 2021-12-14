@@ -9,10 +9,21 @@
     <title>PACMAN</title>
   </head>
   <body>
+    <div class="sidebar">
+      <img src="./Assets/settings.png">
+      <div class="sidebar-content">
+        <input type="range" min="0" max="100">
+        <select name="levelChoose" id="level">
+          <option value="0">Easy</option>
+          <option value="1">Medium</option>
+          <option value="2">Hard</option>
+        </select>
+      </div>
+    </div>
     <div class="grid-wrapper">
       <div class="grid"></div>
       <div class="details-wrap">
-        <div class="score">Score: <span>0</span></div>
+        <div class="score">Score: <span>0</span></div>  
         <div class="pacman-lives"></div>
       </div>
     </div>
