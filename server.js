@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static("public"));
 
 app.get("/",(req,res)=>{
-  res.sendFile(__dirname+"\\Assets\\index.html");
+  res.sendFile(__dirname+"\\public\\index.html");
 })
 
 
@@ -27,5 +27,5 @@ app.get("/sounds/:query",(req,res)=>{
 
 app.get("/login",(req,res)=>{
     var username=req.body.username;
-    res.sendFile(__dirname+"\\Assets\\game.html");
+    res.sendFile(__dirname+"\\public\\game.html");
   })

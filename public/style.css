@@ -48,11 +48,18 @@ h1 span:nth-child(6){
     height: 5vw;
     text-transform: uppercase;
     border-radius: .5vw;
-    text-align: center;
     border: none;
     font-size: 2rem;
     background-image: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
 }
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #start-game:hover{
     box-shadow: 0 0.5rem 0.5rem 0.2rem rgba(255, 105, 135, .3);
     cursor: pointer;
