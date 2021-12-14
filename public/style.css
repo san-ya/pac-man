@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.game-main-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+*{
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+}
+#username{
+    margin: 2vw;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    color: black;
+}
+h1{
+    text-align: center;
+    font-size: 5rem;
+    margin: 0;
+}
+h1 span:nth-child(1){
+    color: cyan;
+}
+h1 span:nth-child(2){
+    color: #FFB8FF;
+}
+h1 span:nth-child(3){
+    color: #FFB852;
+}
+h1 span:nth-child(4){
+    color: red;
+}
+h1 span:nth-child(5){
+    color: cyan;
+}
+h1 span:nth-child(6){
+    color: #FFB8FF;
+}
+.pacman-gif{
+    height: 5rem;
+}
+#start-game{
+    width: 20vw;
+    height: 5vw;
+    text-transform: uppercase;
+    border-radius: .5vw;
+    text-align: center;
+    border: none;
+    font-size: 2rem;
+    background-image: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
+}
+#start-game:hover{
+    box-shadow: 0 0.5rem 0.5rem 0.2rem rgba(255, 105, 135, .3);
+    cursor: pointer;
+}
+body{
+    background-color: black;
+}
