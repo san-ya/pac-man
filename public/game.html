@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="./Assets/pac-man-logo.png" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./game.css" />
+    <title>PACMAN</title>
+  </head>
+  <body>
+    <img class="setting" src="./Assets/settings.png">
+    <div class="sidebar">
+      <div class="sidebar-content">
+        <div class="username">{%username%}</div>
+        <select name="levelChoose" id="level">
+          <option value="0">Easy</option>
+          <option value="1">Medium</option>
+          <option value="2">Hard</option>
+        </select>
+        <div class="audio-setup">
+        <img class="audio" src="./Assets/audio-icon.png">
+        <input type="range" name="volume" id="volume" min="0.0" max="1.0" step="0.1">
+        </div>
+      </div>
+    </div>
+    <div class="grid-wrapper">
+      <div class="grid"></div>
+      <div class="details-wrap">
+        <div class="score">Score: <span>0</span></div>  
+        <div class="pacman-lives"></div>
+      </div>
+    </div>
+
+    <!-- * Modal Code -->
+    <div class="gameOverModal">
+      <div class="modalConatiner">
+        <img class="gameOverModal-gif" src="./Assets/ghosts-fun.gif">
+        <h5>Game Over</h5>
+        <button class="btn btn-restart" onclick="restart()">Restart Game</button>
+        <button class="btn btn-quit" onclick="exit()">Quit</button>
+      </div>
+    </div>
+    <div class="gameWonModal">
+      <div class="gameWonContainer">
+        <img class="gameOverModal-gif" src="./Assets/ghosts-fun.gif">
+        <h5>Woohoo!! You Won!</h5>
+        <h6>Your Score: <span >.</span></h6>
+      </div>
+    </div>
+    <script src="./game.js"></script>
+  </body>
+</html>
