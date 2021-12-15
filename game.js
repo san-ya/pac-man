@@ -269,20 +269,24 @@ function movePacman(event) {
   let nextStep;
 
   switch (event.keyCode) {
+    case 65:
     case 37:
       nextStep = pacCurrIdx - 1;
       if (lvl == 0 && pacCurrIdx - 1 == 170) nextStep = 189;
       pacRotate = 180;
       break;
+    case 68:
     case 39:
       nextStep = pacCurrIdx + 1;
       if (lvl == 0 && pacCurrIdx + 1 == 190) nextStep = 171;
       pacRotate = 0;
       break;
+    case 87:
     case 38:
       nextStep = pacCurrIdx - gridWidth;
       pacRotate = 270;
       break;
+    case 83:
     case 40:
       nextStep = pacCurrIdx + gridWidth;
       pacRotate = 90;
