@@ -9,8 +9,24 @@ const eatGhostAudio = new Audio("./sounds/eat_ghost.wav");
 const dieAudio = new Audio("./sounds/death.wav");
 let gameDetails = document.querySelector(".details-wrap");
 let gameOverModal = document.querySelector(".gameOverModal");
+let gameWonModal = document.querySelector('.gameWonModal')
 let chooseLvl = document.getElementById("level");
+let volumeSlide = document.getElementById('volume')
+let setting = document.querySelector('.setting')
+let sidebar = document.querySelector('.sidebar')
 
+setting.addEventListener('click', function(){
+  sidebar.classList.toggle('sidebar-active')
+})
+volumeSlide.addEventListener('input', function(){
+  console.log(volumeSlide.value);
+  pacdotAudio.volume = volumeSlide.value
+})
+chooseLvl.addEventListener('input', function(){
+  buildGame()
+})
+buildGame() 
+function buildGame(){
 let PATH = 0;
 let WALL = 1;
 let GHOSTHOME = 2;
@@ -24,13 +40,14 @@ let pacmanStart = 0;
 const pacmanSpeed = 300;
 let pacCurrIdx = 0;
 let pacRotate = 0;
-let blinkyStart
-let pinkyStart
-let inkyStart
-let clydeStart
-let leveldoc=document.getElementById("level");
+let blinkyStart;
+let pinkyStart;
+let inkyStart;
+let clydeStart;
+const lvl = chooseLvl.value
+console.log(lvl)
+grid.innerHTML=''
 
-const lvl=leveldoc.innerText;
 console.log(lvl);
 const gridLayout = [];
 const LEVELS = [
@@ -119,7 +136,7 @@ const LEVELS = [
 setDimGrid(lvl);
 function setDimGrid(level) {
   gridLevel = LEVELS[level];
-  if (level === 0) {
+  if (level == 0) {
     gridWidth = 19;
     pacmanStart = 256;
     pacCurrIdx = 256;
@@ -127,7 +144,7 @@ function setDimGrid(level) {
     pinkyStart = 36;
     inkyStart = 340;
     clydeStart = 324;
-  } else if (level === 1) {
+  } else if (level == 1) {
     gridWidth = 31;
     pacmanStart = 324;
     pacCurrIdx = 324;
@@ -135,7 +152,7 @@ function setDimGrid(level) {
     pinkyStart = 231;
     inkyStart = 232;
     clydeStart = 233;
-  } else {
+  } else if (level == 2) {
     gridWidth = 28;
     pacmanStart = 489;
     pacCurrIdx = 489;
@@ -143,6 +160,9 @@ function setDimGrid(level) {
     pinkyStart = 380;
     inkyStart = 436;
     clydeStart = 431;
+  }
+  else{
+    alert('Wrong choice')
   }
   grid.style = `grid-template-columns: repeat(${gridWidth}, 2vw);`;
   gameDetails.style.width = `${gridWidth * 2}vw`; 
@@ -176,6 +196,7 @@ function makeGrid() {
     }
   }
   drawLives();
+  console.log(gridLayout);
 }
 
 gridLayout[pacCurrIdx].removeChild(gridLayout[pacCurrIdx].childNodes[0]);
@@ -352,10 +373,9 @@ function eatenGhost(ghost) {
 }
 
 function checkCollision() {
-  if (
-    gridLayout[pacCurrIdx].classList.contains("ghost") &&
-    !gridLayout[pacCurrIdx].classList.contains("scared-ghost")
-  ) {
+  if (gridLayout[pacCurrIdx].classList.contains("ghost") &&
+    !gridLayout[pacCurrIdx].classList.contains("scared-ghost"))
+    {
     if (pacmanLivesDiv.childElementCount != 1) {
       console.log(pacmanLivesDiv.childElementCount);
       // ghosts.forEach(ghost => clearInterval(ghost.timerId))
@@ -365,9 +385,9 @@ function checkCollision() {
       --pacmanLifeCount;
       dieAudio.play();
       pacmanLivesDiv.removeChild(pacmanLivesDiv.firstChild);
-    } else {
+    }
+    else {
       document.removeEventListener("keydown", movePacman);
-
       gameOverModal.style.display = "flex";
     }
   }
@@ -378,20 +398,20 @@ function checkWin() {
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
     document.removeEventListener("keyup", movePacman);
     setTimeout(function () {
-      alert("You have WON!");
+      gameWonModal.style.display = "flex"
     }, 500);
   }
 }
 
 function drawLives() {
+  pacmanLivesDiv.innerHTML=''
   for (i = pacmanLifeCount; i > 0; i--) {
     let pacLife = document.createElement("img");
     pacLife.src = "./Assets/pacman-life.png";
     pacLife.classList.add("pacLife");
     pacmanLivesDiv.appendChild(pacLife);
   }
-}
-
+}}
 function exit() {
   window.location = "index.html";
 }
