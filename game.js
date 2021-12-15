@@ -1,6 +1,3 @@
-let grid = document.querySelector(".grid");
-let scoreSpan = document.querySelector(".score span");
-let pacmanLivesDiv = document.querySelector(".pacman-lives");
 const pacdotAudio = new Audio("./sounds/munch.wav");
 const powerpillAudio = new Audio("./sounds/pill.wav");
 const gameStartAudio = new Audio("./sounds/game_start.wav");
@@ -13,6 +10,7 @@ let chooseLvl = document.getElementById("level");
 let volumeSlide = document.getElementById('volume')
 let setting = document.querySelector('.setting')
 let sidebar = document.querySelector('.sidebar')
+let resultScore = document.querySelector('.gameWonContainer span')
 
 setting.addEventListener('click', function(){
   sidebar.classList.toggle('sidebar-active')
@@ -24,8 +22,12 @@ volumeSlide.addEventListener('input', function(){
 chooseLvl.addEventListener('input', function(){
   buildGame()
 })
+
 buildGame() 
 function buildGame(){
+let grid = document.querySelector(".grid");
+let scoreSpan = document.querySelector(".score span");
+let pacmanLivesDiv = document.querySelector(".pacman-lives");
 let PATH = 0;
 let WALL = 1;
 let GHOSTHOME = 2;
@@ -192,9 +194,10 @@ function makeGrid() {
       newCell.appendChild(pacPill).className = "power-pill";
       pacdotCount++;
     }
+    else
+    newCell.classList.add('ghost-home')
   }
   drawLives();
-  console.log(gridLayout);
 }
 
 gridLayout[pacCurrIdx].removeChild(gridLayout[pacCurrIdx].childNodes[0]);
@@ -390,13 +393,14 @@ function checkCollision() {
     }
   }
 }
-checkWin();
+checkWin(); 
 function checkWin() {
   if (pacdotCount === 1) {
     ghosts.forEach((ghost) => clearInterval(ghost.timerId));
     document.removeEventListener("keyup", movePacman);
     setTimeout(function () {
       gameWonModal.style.display = "flex"
+      resultScore.innerHTML = score
     }, 500);
   }
 }
