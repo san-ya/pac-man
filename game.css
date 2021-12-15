@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
+:root{
+  --font-main: 'Press Start 2P', cursive;
+  --color-pink: #FFB8FF;
+  --color-yellow: #FFB852;
+}
 body {
   background-color: black;
   color: white;
-  font-family: 'Press Start 2P', cursive;
+  font-family: var(--font-main);
 }
 .grid-wrapper {
   display: flex;
@@ -36,15 +40,14 @@ body {
   box-sizing: border-box;
 }
 .pac-dot {
-  width: 0.5vw;
-  height: 0.5vw;
+  width: 0.35vw;
+  height: 0.35vw;
   background-color: rgb(243, 243, 152);
   border-radius: 50%;
 }
-
 .power-pill {
-  width: 1.2vw;
-  height: 1.2vw;
+  width: 1vw;
+  height: 1vw;
   animation-name: blink;
   animation-duration: 0.3s;
   animation-direction: alternate;
@@ -98,8 +101,8 @@ body {
   width: 2vw;
   margin-left: 1vw;
 }
-
-.gameOverModal{
+.gameOverModal, 
+.gameWonModal{
   display: none;
   justify-content: center;
   align-items: center;
@@ -112,7 +115,8 @@ body {
   background-color: rgba(0, 0, 0, 0.171);
   backdrop-filter: blur(1px);
 }
-.modalConatiner{
+.modalConatiner,
+.gameWonContainer{
   background-color: black ;
   display: flex;
   flex-direction: column;
@@ -131,7 +135,7 @@ body {
   width: 15vw;
   height: 4vw;
   text-transform: uppercase;
-  font-family: 'Press Start 2P', cursive;
+  font-family: var(--font-main);
   outline: none;
   border: none;
   border-radius: .5vw;
@@ -151,15 +155,48 @@ body {
 .btn-quit:hover{
   background-color: rgba(255, 0, 0, 0.733);
 }
-.sidebar img{
+.sidebar{
+  position: fixed;
+  right: 3vw;
+  height: 100%;
+  transform: translateX(120%);
+  transition: all ease-in-out .7s;
+}
+.sidebar-active{
+  transform: translateX(0);
+  transition: all ease-in-out .7s;
+}
+.sidebar-content{
+  margin-top: 7vw;
+  display: flex;
+  flex-direction: column;
+  height: 30%;
+  justify-content: space-evenly;
+}
+.setting{
   filter: invert(1);
   width: 3vw;
   position: fixed;
   right: 1vw;
   top: 1vw;
+  z-index: 10;
 }
-.sidebar img:hover{
+.setting:hover{
   animation:spin 1s linear infinite;
+}
+.sidebar select{
+  height: 3vw;
+  background-color: transparent;
+  color: white;
+  font-family: var(--font-main);
+}
+.sidebar select option{
+  background-color: black;
+  color: white;
+}
+.audio{
+  filter: invert(1);
+  width: 1.5vw;
 }
 @keyframes spin { 
   100% {
