@@ -413,7 +413,6 @@ function drawLives() {
 function exit() {
   window.location = "index.html";
 }
-
 function restart() {
   window.location = "game.html";
 }
