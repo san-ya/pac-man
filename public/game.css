@@ -159,7 +159,7 @@ body {
   position: fixed;
   right: 3vw;
   height: 100%;
-  transform: translateX(120%);
+  transform: translateX(130%);
   transition: all ease-in-out .7s;
 }
 .sidebar-active{
