@@ -10,22 +10,27 @@ const dieAudio = new Audio("./sounds/death.wav");
 let gameDetails = document.querySelector(".details-wrap");
 let gameOverModal = document.querySelector(".gameOverModal");
 let gameWonModal = document.querySelector('.gameWonModal')
-let chooseLvl = document.getElementById("level");
 let volumeSlide = document.getElementById('volume')
 let setting = document.querySelector('.setting')
 let sidebar = document.querySelector('.sidebar')
+let leveldoc=document.getElementById("level");
+
+let lvl=leveldoc.innerText;
 
 setting.addEventListener('click', function(){
   sidebar.classList.toggle('sidebar-active')
 })
 volumeSlide.addEventListener('input', function(){
-  console.log(volumeSlide.value);
+  
   pacdotAudio.volume = volumeSlide.value
 })
-chooseLvl.addEventListener('input', function(){
+/*chooseLvl.addEventListener('input', function(){
   buildGame()
-})
+})*/
+
+console.log(lvl,"currentLevel");
 buildGame() 
+
 function buildGame(){
 let PATH = 0;
 let WALL = 1;
@@ -44,11 +49,8 @@ let blinkyStart;
 let pinkyStart;
 let inkyStart;
 let clydeStart;
-const lvl = chooseLvl.value
-console.log(lvl)
 grid.innerHTML=''
 
-console.log(lvl);
 const gridLayout = [];
 const LEVELS = [
   [
@@ -196,7 +198,7 @@ function makeGrid() {
     }
   }
   drawLives();
-  console.log(gridLayout);
+  //console.log(gridLayout);
 }
 
 gridLayout[pacCurrIdx].removeChild(gridLayout[pacCurrIdx].childNodes[0]);
@@ -377,7 +379,7 @@ function checkCollision() {
     !gridLayout[pacCurrIdx].classList.contains("scared-ghost"))
     {
     if (pacmanLivesDiv.childElementCount != 1) {
-      console.log(pacmanLivesDiv.childElementCount);
+      //console.log(pacmanLivesDiv.childElementCount);
       // ghosts.forEach(ghost => clearInterval(ghost.timerId))
       gridLayout[pacCurrIdx].classList.remove("pacman");
       gridLayout[pacmanStart].classList.add("pacman");
