@@ -1,1 +1,1 @@
-fs.writeFileSync(fileadd,gamefile);
+{%div%}

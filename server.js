@@ -33,18 +33,14 @@ app.get("/sounds/:query",(req,res)=>{
 app.get("/login",(req,res)=>{
 
     fs.writeFileSync(fileadd,gamefile);
-    gamefile=fs.readFileSync(fileadd,"utf-8");
+    temp=fs.readFileSync(fileadd,"utf-8");
     var username=req.query['username'];
-    var level=req.query.level;
-    console.log(username);
-    console.log(level);
-    let div="<div id=\"level\">{%level%}</div>";
-    const newLocal = "{%level%}";
-    let newdiv=div.replace(newLocal,level);
-    const gamediv="{%div%}";
-   let temp=gamefile.replace(gamediv,newdiv);
-   console.log(temp);
-  
-   fs.writeFileSync(fileadd,temp);
+    const newLocal = "{%username%}";
+    let final=temp.replace(newLocal,username);
+    console.log(final);
+    console.log(gamefile);
+    fs.writeFileSync(fileadd,final);
    res.sendFile(__dirname+"//public"+"//game.html")
   })
+
+  
