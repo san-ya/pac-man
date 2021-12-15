@@ -28,11 +28,11 @@ gameAudio.addEventListener('click', function(){
   if(audioOn)
   {
     startGameAudio.play();
-    gameAudio.src = "../Assets/audio-icon.png"
+    gameAudio.src = "./Assets/audio-icon.png"
   }
   else
   {
     startGameAudio.pause()
-    gameAudio.src = "../Assets/audio-mute.png"
+    gameAudio.src = "./Assets/audio-mute.png"
   }
 })
