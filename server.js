@@ -35,8 +35,14 @@ app.get("/login",(req,res)=>{
     fs.writeFileSync(fileadd,gamefile);
     temp=fs.readFileSync(fileadd,"utf-8");
     var username=req.query['username'];
-    const newLocal = "{%username%}";
-    let final=temp.replace(newLocal,username);
+    var level=req.query['levelChoose'];
+
+    const Localuser = "{%username%}";
+    const Locallevel="{%level%}";
+
+    let final=temp.replace(Localuser,username);
+    final=final.replace(Locallevel,level)
+    
     console.log(final);
     console.log(gamefile);
     fs.writeFileSync(fileadd,final);
