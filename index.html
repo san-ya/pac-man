@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" href="./Assets/pac-man-logo.png">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>PACMAN</title>
+  </head>
+  <body>
+    <img class="game-audio" src="../Assets/audio-mute.png" onmouseover="this.style.cursor='pointer'">
+    <div class="game-main-container">
+      <h1>
+        <span class="pacman-head">P</span>
+        <span class="pacman-head">A</span>
+        <span class="pacman-head">C</span>
+        <span class="pacman-head">M</span>
+        <span class="pacman-head">A</span>
+        <span class="pacman-head">N</span>
+      </h1>
+      <img src="./Assets/pacman-game.gif" class="pacman-gif">
+      <!-- <div class="rules">
+        <h3>How to Play</h3>
+        cdskjbd
+      </div> -->
+      <!-- <button onclick="window.location='game.html';" id="start-game">
+        Start
+      </button> -->
+      <form method="GET" action="game.html" onsubmit="start()" type="submit"> 
+      <input type="text" name="username" id="username" placeholder="Enter the username.." required>
+      <br>
+      <select name="level" id="level">
+        <option value="0">Easy</option>
+        <option value="1">Medium</option>
+        <option value="2">Hard</option>
+      </select>
+      <br>
+      <button onclick="start()" type="submit" id="start-game">
+        Start
+      </button>
+      <br>
+      </form>
+    </div>
+    <!-- <script src="./game.js"></script> -->
+    <script src="./index.js"></script>
+  </body>
+</html>
