@@ -12,12 +12,7 @@
     <img class="setting" src="./Assets/settings.png">
     <div class="sidebar">
       <div class="sidebar-content">
-        <div class="username">ansh</div>
-        <select name="levelChoose" id="level">
-          <option value="0">Easy</option>
-          <option value="1">Medium</option>
-          <option value="2">Hard</option>
-        </select>
+        <div class="username">{%username%}</div>
         <div class="audio-setup">
         <img class="audio" src="./Assets/audio-icon.png">
         <input type="range" name="volume" id="volume" min="0.0" max="1.0" step="0.1">
@@ -29,6 +24,7 @@
       <div class="details-wrap">
         <div class="score">Score: <span>0</span></div>  
         <div class="pacman-lives"></div>
+        <div id="level">{%level%}</div>
       </div>
     </div>
 
