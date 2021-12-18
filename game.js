@@ -306,6 +306,9 @@ function unScareGhost() {
 
 //ghost class
 class GHOST {
+  // goodDirection = [];
+  // goodPositions = [];
+  // directionStore = [];
   constructor(className, startIdx, speed) {
     this.className = className;
     this.startIdx = startIdx;
@@ -313,6 +316,8 @@ class GHOST {
     this.currIdx = startIdx;
     this.timerId = NaN;
     this.isScared = false;
+    // this.directionMove = -1;
+    // this.lastDirection = 0;
   }
 }
 
@@ -327,11 +332,19 @@ ghosts.forEach((ghost) => {
   gridLayout[ghost.currIdx].classList.add(ghost.className, "ghost");
 });
 
+
+//get coordinates
+function getCoordinates(index){
+  return [index % gridWidth , Math.floor(index / gridWidth)]
+}
+
 ghosts.forEach((ghost) => moveGhost(ghost));
 
 function moveGhost(ghost) {
   const directions = [1, -1, gridWidth, -gridWidth];
   let nextPos = directions[Math.floor(Math.random() * directions.length)];
+
+  //for(let i = 0; i < directions.length; i++){
   ghost.timerId = setInterval(function () {
     if (
       !gridLayout[ghost.currIdx + nextPos].classList.contains("wall") &&
@@ -342,15 +355,87 @@ function moveGhost(ghost) {
         ghost.className,
         "scared-ghost"
       );
-      ghost.currIdx += nextPos;
+      
+      // ghost.goodDirection.push(directions[i]);
+      // pacManBias(ghost)
+      // makeTheMove(ghost);
+      
+      //smart moves
+      const [ghostX , ghostY] = getCoordinates(ghost.currIdx);
+      const [pacmanX , pacmanY] = getCoordinates(pacCurrIdx);
+      console.log(ghost.currIdx);
+      const [ghostNewX , ghostNewY] = getCoordinates(ghost.currIdx + nextPos);
+
+      function isXCoordCloser(){
+        if ((Math.abs(ghostNewX - pacmanX)) < (Math.abs(ghostX - pacmanX))){
+          return true;
+        }else return false;
+      }
+
+      function isYCoordCloser(){
+        if ((Math.abs(ghostNewY - pacmanY)) < (Math.abs(ghostY - pacmanY))){
+          return true;
+        }else return false;
+      }
+
+      if(isXCoordCloser || isYCoordCloser){
+        ghost.currIdx += nextPos;
+        gridLayout[ghost.currIdx].classList.add("ghost", ghost.className);
+      }else {
+        gridLayout[ghost.currIdx].classList.add("ghost", ghost.className);
+        nextPos = directions[Math.floor(Math.random() * directions.length)];
+      }  
+
+      //ghost.currIdx += nextPos;
       gridLayout[ghost.currIdx].classList.add("ghost", ghost.className);
     } else nextPos = directions[Math.floor(Math.random() * directions.length)];
 
+     if(gridLayout[ghost.currIdx].classList.contains('pacman')) clearInterval(ghost.timerId)
+    
     if (ghost.isScared) gridLayout[ghost.currIdx].classList.add("scared-ghost");
     eatenGhost(ghost);
     checkCollision();
   }, ghost.speed);
+
+//}
+
 }
+
+// function pacManBias(ghost){
+//   if (!ghost.isScared){
+//     ghost.goodPositions = ghost.goodDirections.map(x => x + ghost.currIdx)
+
+//     const closestIndex = ghost.goodPositions.reduce(function(prev, curr) {
+//       return (Math.abs(curr - pacCurrIdx) < Math.abs(prev - pacCurrIdx) ? curr : prev)
+//     })
+//     const pacModulas = pacCurrIdx % gridWidth
+//     const posPositionsModulas = ghost.goodPositions.map(x => x % gridWidth)
+//     const closestModulas = posPositionsModulas.reduce(function(prev, curr) {
+//       return (Math.abs(curr - pacModulas) < Math.abs(prev - pacModulas) ? curr : prev)
+//     })
+//     const closestModulasIndex = posPositionsModulas.findIndex(x => x === closestModulas)
+//     const closestModulasREAL = ghost.goodPositions[closestModulasIndex]
+//     const idealmoves = [closestIndex, closestModulasREAL]
+//     ghost.positionMove = idealmoves[Math.floor(Math.random() * idealmoves.length)]
+//     return ghost.positionMove
+//   }
+//   else {
+//     ghost.goodPositions = ghost.goodDirections.map(x => x + ghost.currIdx)
+//     ghost.positionMove = ghost.goodPositions.reduce(function(prev, curr) {
+//       return (Math.abs(curr - pacCurrIdx) > Math.abs(prev - pacCurrIdx) ? curr : prev)
+//     })
+//     return ghost.positionMove
+//   }
+// }
+
+// function makeTheMove(ghost){
+//   ghost.directionMove = ghost.currIdx - ghost.startIdx
+//   ghost.directionStore.push(ghost.directionMove)
+//   ghost.lastDirection = ghost.directionStore[ghost.directionStore.length-1]
+//   ghost.currIdx += ghost.directionMove;
+//   gridLayout[ghost.currIdx].classList.add("ghost", ghost.className);
+// }
+
 
 function eatenGhost(ghost) {
   if (
